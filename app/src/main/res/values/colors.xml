@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff6600</color>
+    <color name="colorPrimaryClick">#ff5200</color>
+    <color name="colorPrimaryDark">#ff5200</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="background_bg">#eeeeee</color>
+    <color name="bottom_tool_bg">#f8f8f8</color>
+    <color name="division_line_color">#dfdfdf</color>
+    <color name="top_tool_bg">#fdfdfd</color>
+
+    <!-- 文字主色 -->
+    <color name="text_main_color">#595757</color>
+    <!-- 文字副色 -->
+    <color name="text_second_color">#b3b3b3</color>
+    <!-- 文字深色 -->
+    <color name="text_deep_color">#222222</color>
+    <!-- 标题未选中色 -->
+    <color name="text_title_color">#9e9e9f</color>
+    <!-- 点击效果 -->
+    <color name="item_pressed_color">#44bdbdbd</color>
+    <!-- 分隔线色 -->
+    <color name="divider_color">#e4e4e4</color>
+    <!-- 提醒颜色 -->
+    <color name="notice_color">#f3242a</color>
+    <color name="notice_nor_color">#f15252</color>
+    <color name="blue_color">#1a8fdb</color>
+    <color name="blue_deep_color">#0251ad</color>
+
+    <color name="shadow_white_color">#22000000</color>
+    <color name="shadow_color">#88000000</color>
+</resources>

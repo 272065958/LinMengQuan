@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_view" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/auto_space">
+
+            <TextView
+                android:id="@+id/notication_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_marginRight="@dimen/icon_size"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/notication_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/notication_title"
+                android:layout_marginTop="@dimen/auto_space"
+                android:textColor="@color/text_main_color" />
+
+            <TextView
+                android:id="@+id/notication_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/notication_detail"
+                android:layout_marginTop="@dimen/auto_space"
+                android:textColor="@color/text_main_color" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

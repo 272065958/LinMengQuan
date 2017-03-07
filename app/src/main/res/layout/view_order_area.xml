@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/auto_space"
+        android:paddingTop="@dimen/auto_space"
+        android:background="@android:color/white"
+        android:visibility="gone" />
+
+    <include layout="@layout/view_order_time" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_pressed_bg"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/view_space"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+        <TextView
+            android:id="@+id/order_area"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:layout_weight="1"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_second_color"
+            android:textSize="@dimen/text_size_middle" />
+
+    </LinearLayout>
+</LinearLayout>

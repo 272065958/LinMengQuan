@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:padding="@dimen/auto_space">
+
+    <TextView
+        android:id="@+id/balance_record_time_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/middle_space"
+        android:gravity="right"
+        android:text="@string/balance_record_time"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/balance_record_change_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_time_tip"
+        android:layout_marginTop="@dimen/middle_space"
+        android:gravity="right"
+        android:text="@string/balance_record_change"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/balance_record_balance_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_change_tip"
+        android:layout_marginTop="@dimen/middle_space"
+        android:gravity="right"
+        android:text="@string/balance_record_balance"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/balance_record_remark_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_balance_tip"
+        android:layout_marginTop="@dimen/middle_space"
+        android:gravity="right"
+        android:text="@string/balance_record_remark"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_remark_tip"
+        android:layout_marginTop="@dimen/middle_space"
+        android:gravity="right"
+        android:text="@string/balance_record_operator"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/balance_record_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/balance_record_time_tip"
+        android:text="2016-05-15 09:30"
+        android:textColor="@color/text_deep_color" />
+
+    <TextView
+        android:id="@+id/balance_record_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_time"
+        android:layout_marginTop="@dimen/middle_space"
+        android:layout_toRightOf="@id/balance_record_time_tip"
+        android:text="-120.00"
+        android:textColor="@color/notice_color" />
+
+    <TextView
+        android:id="@+id/balance_record_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_change"
+        android:layout_marginTop="@dimen/middle_space"
+        android:layout_toRightOf="@id/balance_record_time_tip"
+        android:text="220.00"
+        android:textColor="@color/text_deep_color" />
+
+    <TextView
+        android:id="@+id/balance_record_remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_balance"
+        android:layout_marginTop="@dimen/middle_space"
+        android:layout_toRightOf="@id/balance_record_time_tip"
+        android:text="散单清洁消费"
+        android:textColor="@color/text_deep_color" />
+
+    <TextView
+        android:id="@+id/balance_record_operator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balance_record_remark"
+        android:layout_marginTop="@dimen/middle_space"
+        android:layout_toRightOf="@id/balance_record_time_tip"
+        android:text="王小帅"
+        android:textColor="@color/text_deep_color" />
+</RelativeLayout>

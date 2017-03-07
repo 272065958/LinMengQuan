@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_view" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_button"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="@dimen/button_bottom_height"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/order_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main_color"
+                android:textSize="@dimen/text_size_middle"/>
+
+            <TextView
+                android:id="@+id/order_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_main_color"
+                android:layout_marginTop="@dimen/middle_space"
+                android:layout_below="@id/order_price"
+                android:textSize="@dimen/text_size_small"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/shop_cart_pay"
+            android:layout_width="@dimen/pay_btn_size"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/view_space"
+            android:background="@drawable/main_dark_color_btn"
+            android:gravity="center"
+            android:onClick="buyClick"
+            android:text="@string/button_buy_now"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom_button"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@color/divider_color"
+        android:dividerHeight="@dimen/view_space"
+        android:fadingEdge="none"
+        android:visibility="gone"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" />
+
+    <include
+        android:id="@+id/loading_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        layout="@layout/loading_view" />
+</RelativeLayout>

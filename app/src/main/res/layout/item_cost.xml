@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/cost_title_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_pressed_bg"
+        android:padding="@dimen/auto_space">
+
+        <TextView
+            android:id="@+id/cost_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="2015-03"
+            android:textColor="@color/text_deep_color" />
+
+        <ImageView
+            android:id="@+id/cost_detail_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_enter" />
+
+        <TextView
+            android:id="@+id/cost_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/icon_size"
+            android:text="未缴"
+            android:textColor="@color/text_deep_color" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/cost_pay_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/cost_no_pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/middle_space"
+            android:padding="@dimen/auto_space"
+            android:textColor="@color/text_second_color" />
+
+        <TextView
+            android:id="@+id/cost_has_pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/middle_space"
+            android:padding="@dimen/auto_space"
+            android:textColor="@color/text_second_color" />
+    </LinearLayout>
+
+</LinearLayout>

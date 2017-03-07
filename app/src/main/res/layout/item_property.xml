@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_pressed_bg"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/auto_space"
+    android:paddingBottom="@dimen/auto_space"
+    android:paddingLeft="@dimen/fab_margin"
+    android:paddingRight="@dimen/fab_margin">
+
+    <TextView
+        android:id="@+id/property_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="嘉信花园一期"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/property_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/property_project"
+        android:layout_marginTop="@dimen/small_space"
+        android:text="22座301"
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:id="@+id/property_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/property_position"
+        android:layout_marginTop="@dimen/middle_space"
+        android:text="广东省  佛山市"
+        android:textColor="@color/text_main_color"
+        android:textSize="@dimen/text_size_small" />
+
+    <ImageView
+        android:id="@+id/property_select"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:src="@drawable/select_icon" />
+</RelativeLayout>

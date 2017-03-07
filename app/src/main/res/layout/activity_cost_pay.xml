@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <include layout="@layout/property_location_select" />
+
+    <include layout="@layout/item_divider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:text="选择要缴费月份"/>
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="3"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:layout_marginRight="@dimen/auto_space"
+        android:listSelector="@android:color/transparent"
+        android:horizontalSpacing="@dimen/auto_space"
+        android:verticalSpacing="@dimen/auto_space"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_bottom_height">
+
+        <TextView
+            android:id="@+id/pay_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/text_deep_color"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:gravity="center_vertical"
+            android:text="共6个月"/>
+
+        <TextView
+            android:id="@+id/pay_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_toRightOf="@id/pay_count"
+            android:layout_marginLeft="@dimen/icon_size"
+            android:textColor="@color/notice_color" />
+
+        <TextView
+            android:id="@+id/pay_button"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/view_space"
+            android:gravity="center"
+            android:onClick="onClick"
+            android:text="确认"/>
+
+    </RelativeLayout>
+</LinearLayout>

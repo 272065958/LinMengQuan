@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_pressed_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:onClick="timeSelect"
+    android:padding="@dimen/auto_space">
+
+    <TextView
+        android:id="@+id/order_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:layout_weight="1"
+        android:hint="请选择服务时间"
+        android:textSize="@dimen/text_size_middle"
+        android:textColor="@color/text_deep_color"
+        android:textColorHint="@color/text_second_color" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:src="@drawable/enter_icon" />
+
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/auto_space"
+    android:background="@drawable/item_pressed_bg">
+
+    <TextView
+        android:id="@+id/notication_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/text_deep_color"/>
+
+    <TextView
+        android:id="@+id/notication_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/icon_size"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_size_normal"
+        android:layout_toLeftOf="@id/notication_time"
+        android:textColor="@color/text_deep_color"/>
+
+    <TextView
+        android:id="@+id/notication_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/auto_space"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/text_second_color"
+        android:layout_below="@id/notication_title"/>
+
+</RelativeLayout>

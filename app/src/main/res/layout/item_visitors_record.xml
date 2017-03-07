@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/auto_space">
+
+
+    <TextView
+        android:id="@+id/visitors_record_code_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:text="@string/visitors_record_code"
+        android:textColor="@color/text_second_color"
+        android:layout_marginBottom="@dimen/middle_space"/>
+
+    <TextView
+        android:id="@+id/visitors_record_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/visitors_record_code_tip"
+        android:textColor="@color/text_deep_color"/>
+
+    <TextView
+        android:id="@+id/visitors_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/notice_color"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/visitors_record_visitor_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:text="@string/visitors_record_visitor"
+        android:layout_below="@id/visitors_record_code_tip"
+        android:layout_marginBottom="@dimen/middle_space"
+        android:textColor="@color/text_second_color" />
+
+    <TextView
+        android:id="@+id/visitors_record_visitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visitors_record_code_tip"
+        android:layout_toRightOf="@id/visitors_record_visitor_tip"
+        android:textColor="@color/text_deep_color"/>
+
+    <TextView
+        android:id="@+id/visitors_record_remark_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:text="@string/visitors_record_remark"
+        android:layout_below="@id/visitors_record_visitor_tip"
+        android:layout_marginBottom="@dimen/middle_space"
+        android:textColor="@color/text_second_color" />
+
+    <TextView
+        android:id="@+id/visitors_record_remark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visitors_record_visitor_tip"
+        android:layout_toRightOf="@id/visitors_record_remark_tip"
+        android:textColor="@color/text_deep_color"/>
+
+    <TextView
+        android:id="@+id/visitors_record_time_tip"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="wrap_content"
+        android:text="@string/visitors_record_time"
+        android:layout_below="@id/visitors_record_remark_tip"
+        android:layout_marginBottom="@dimen/middle_space"
+        android:textColor="@color/text_second_color" />
+
+    <TextView
+        android:id="@+id/visitors_record_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/visitors_record_remark_tip"
+        android:layout_toRightOf="@id/visitors_record_time_tip"
+        android:textColor="@color/text_second_color"/>
+</RelativeLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/auto_space"
+        android:textColor="@color/text_main_color"
+        android:text="选择支付方式"/>
+
+    <include
+        layout="@layout/item_divider" />
+
+    <RelativeLayout
+        android:id="@+id/pay_alipy_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingTop="@dimen/auto_space"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingBottom="@dimen/auto_space"
+        android:onClick="payAlipay"
+        android:background="@drawable/item_pressed_bg">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_centerVertical="true"
+            android:src="@drawable/alipay_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_main_color"
+            android:layout_centerVertical="true"
+            android:text="支付宝支付"
+            android:layout_marginLeft="30dp"/>
+
+        <ImageView
+            android:layout_width="@dimen/fab_margin"
+            android:layout_height="@dimen/fab_margin"
+            android:src="@drawable/select_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <RelativeLayout
+        android:id="@+id/pay_weixin_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingTop="@dimen/auto_space"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingBottom="@dimen/auto_space"
+        android:onClick="payWeixin"
+        android:background="@drawable/item_pressed_bg">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_centerVertical="true"
+            android:src="@drawable/weixin_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_main_color"
+            android:layout_centerVertical="true"
+            android:text="微信支付"
+            android:layout_marginLeft="30dp"/>
+
+        <ImageView
+            android:layout_width="@dimen/fab_margin"
+            android:layout_height="@dimen/fab_margin"
+            android:src="@drawable/select_icon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <include
+        layout="@layout/item_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_space"
+        android:layout_marginTop="@dimen/auto_space"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingTop="@dimen/auto_space"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingBottom="@dimen/auto_space"
+        android:background="@android:color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_main_color"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:text="金额" />
+
+        <EditText
+            android:id="@+id/balance_recharge_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入充值金额"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/text_second_color"
+            android:inputType="numberDecimal"
+            android:paddingLeft="@dimen/middle_space"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <include layout="@layout/bottom_button" />
+</LinearLayout>

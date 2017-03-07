@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/shop_detail_image"
+        android:layout_width="match_parent"
+        android:layout_height="120dp" />
+
+    <include layout="@layout/item_divider" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/auto_space">
+
+        <include
+            android:id="@+id/shop_count_view"
+            layout="@layout/item_shop_count_edit"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/shop_detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/shop_count_view"
+            android:text="金龙鱼葵花籽食用调和油5L（产品包装更新，新老包装随机发放）"
+            android:textSize="@dimen/text_size_normal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shop_detail_name"
+            android:layout_marginTop="@dimen/small_space"
+            android:text="￥43.90"
+            android:textColor="@color/notice_color" />
+    </RelativeLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/buy_time"
+            android:text="距结束还有："
+            android:textColor="@color/text_main_color" />
+
+        <TextView
+            android:id="@+id/buy_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:text="3天23时33分12秒"
+            android:textColor="@color/text_deep_color" />
+    </LinearLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/auto_space"
+        android:text="购买须知："
+        android:textColor="@color/text_main_color" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/auto_space"
+        android:paddingLeft="@dimen/auto_space"
+        android:paddingRight="@dimen/auto_space"
+        android:text="源头直供，货真价实。团购结束后，一个星期内保证到货。\n配送时间：具体请留意短信或者订单信息更新。"
+        android:textColor="@color/text_main_color" />
+</LinearLayout>

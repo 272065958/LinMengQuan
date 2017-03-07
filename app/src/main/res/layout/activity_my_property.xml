@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/notice_color"
+        android:padding="@dimen/fab_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="@dimen/auto_space"
+            android:layout_marginBottom="@dimen/auto_space"
+            android:textSize="@dimen/text_size_middle"
+            android:text="@string/myself_balance"/>
+
+        <TextView
+            android:id="@+id/my_property_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/auto_space"
+            android:layout_marginBottom="@dimen/auto_space"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_big_big"
+            android:text="0.00"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="@dimen/auto_space"
+            android:textSize="@dimen/text_size_middle"
+            android:text="手机账户余额购买商品时只支持最大金额使用"/>
+    </LinearLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <include
+        layout="@layout/item_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_space"/>
+
+    <RelativeLayout
+        android:id="@+id/balance_recharge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_space"
+        android:background="@drawable/item_pressed_bg"
+        android:onClick="balanceClick"
+        android:padding="@dimen/normal_space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/balance_recharge"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_enter" />
+    </RelativeLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <RelativeLayout
+        android:id="@+id/balance_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_space"
+        android:background="@drawable/item_pressed_bg"
+        android:onClick="balanceClick"
+        android:padding="@dimen/normal_space">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/balance_record"
+            android:textColor="@android:color/black" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_enter" />
+    </RelativeLayout>
+
+</LinearLayout>

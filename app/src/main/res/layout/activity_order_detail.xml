@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/item_list_view" />
+
+    <RelativeLayout
+        android:id="@+id/bottom_button_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@android:color/white"
+        android:padding="@dimen/auto_space">
+
+        <TextView
+            android:id="@+id/order_button_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/black_frame_bg"
+            android:paddingBottom="@dimen/middle_space"
+            android:paddingLeft="@dimen/icon_size"
+            android:paddingRight="@dimen/icon_size"
+            android:paddingTop="@dimen/middle_space"
+            android:textColor="@color/text_deep_color" />
+
+        <TextView
+            android:id="@+id/order_button_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/auto_space"
+            android:layout_toLeftOf="@id/order_button_1"
+            android:background="@drawable/black_frame_bg"
+            android:paddingBottom="@dimen/middle_space"
+            android:paddingLeft="@dimen/icon_size"
+            android:paddingRight="@dimen/icon_size"
+            android:paddingTop="@dimen/middle_space"
+            android:textColor="@color/text_deep_color"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

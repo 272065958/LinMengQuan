@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_pressed_bg"
+    android:padding="@dimen/auto_space">
+
+    <ImageView
+        android:id="@+id/laundry_image"
+        android:layout_width="@dimen/header_size"
+        android:layout_height="@dimen/header_size"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/laundry_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/laundry_image"
+        android:layout_marginTop="@dimen/middle_space"
+        android:layout_centerHorizontal="true"/>
+    
+    <TextView
+        android:id="@+id/laundry_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/notice_color"
+        android:layout_below="@id/laundry_title"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/laundry_count"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:background="@drawable/notice_bg"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_small"
+        android:layout_marginRight="@dimen/auto_space"
+        android:textColor="@android:color/white"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"/>
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/property_notication"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_pressed_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/auto_space">
+
+    <ImageView
+        android:id="@+id/operate_icon"
+        android:layout_width="@dimen/property_icon_size"
+        android:layout_height="@dimen/property_icon_size" />
+
+    <TextView
+        android:id="@+id/operate_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/small_space" />
+</LinearLayout>

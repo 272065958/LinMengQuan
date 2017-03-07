@@ -1,0 +1,50 @@
+package net.kamfat.omengo.my;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
+
+import net.kamfat.omengo.R;
+import net.kamfat.omengo.base.BaseActivity;
+import net.kamfat.omengo.base.MyBaseAdapter;
+import net.kamfat.omengo.bean.CouponBean;
+
+import java.util.ArrayList;
+
+/**
+ * Created by cjx on 2016/12/27.
+ */
+public class CouponAdapter extends MyBaseAdapter {
+    public CouponAdapter(ArrayList<?> list, BaseActivity context){
+        super(list, context);
+    }
+
+    @Override
+    public View createView(Context context) {
+        return View.inflate(context, R.layout.item_coupon, null);
+    }
+
+    @Override
+    public void bindData(int position, MyViewHolder holder) {
+        CouponBean cb = (CouponBean) getItem(position);
+        ViewHolder ho = (ViewHolder) holder;
+        ho.timeView.setText(String.format(context.getString(R.string.coupon_valid_time_format), cb.end_date));
+        ho.nameView.setText(cb.name);
+        ho.priceView.setText("￥"+cb.price);
+    }
+
+    @Override
+    public MyViewHolder bindViewHolder(View v) {
+        return new ViewHolder(v);
+    }
+
+    class ViewHolder extends MyViewHolder{
+        TextView nameView, timeView, priceView;
+        public ViewHolder(View v){
+            super(v);
+            priceView = (TextView) v.findViewById(R.id.coupon_price);
+            nameView = (TextView) v.findViewById(R.id.coupon_name);
+            timeView = (TextView) v.findViewById(R.id.coupon_time);
+        }
+    }
+}

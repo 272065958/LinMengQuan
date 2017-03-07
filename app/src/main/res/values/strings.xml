@@ -1,0 +1,182 @@
+<resources>
+    <string name="app_name">邻檬圈</string>
+    <string name="http_error">服务器超时</string>
+    <string name="http_steam_exception">提交失败,请重试</string>
+    <string name="upload_progress_format">上传进度%1$d</string>
+    <string name="http_exception">数据异常</string>
+    <string name="http_loading">拼命加载中&#8230;</string>
+    <string name="tip_title">提示</string>
+    <string name="exit_tip">是否退出当前界面?</string>
+    <string name="select_photo_upload">(已选中%1$d张) 立即上传</string>
+    <string name="crop_image">裁剪图片</string>
+    <string name="upload_cancel">已取消上传</string>
+    <string name="upload_progress">已上传%1$d%%</string>
+
+    <string name="register_now">立即注册</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="find_password">找回密码</string>
+    <string name="login_name">账号：</string>
+    <string name="login_name_hint">手机号或昵称</string>
+    <string name="register_name">昵称：</string>
+    <string name="register_name_hint">请输入昵称</string>
+    <string name="register_phone">手机号：</string>
+    <string name="register_phone_hint">请输入手机号</string>
+    <string name="register_code">验证码：</string>
+    <string name="register_code_hint">请输入手机验证码</string>
+    <string name="register_true_code_null_hint">请先获取验证码</string>
+    <string name="register_code_null_hint">请输入验证码</string>
+    <string name="register_code_error_hint">验证码错误</string>
+    <string name="register_password">密码：</string>
+    <string name="change_password_old">旧密码：</string>
+    <string name="change_password_old_hint">请输入旧密码</string>
+    <string name="change_password_new">新密码：</string>
+    <string name="change_password_new_hint">请输入新密码</string>
+    <string name="register_password_hint">请输入密码</string>
+    <string name="register_password_comfirm">确认密码：</string>
+    <string name="register_password_comfirm_hint">请再次确认密码</string>
+    <string name="register_password_comfirm_error">两次密码不一致</string>
+
+    <!-- 收货地址 -->
+    <string name="receive_address_title">选择地址</string>
+    <string name="receive_address">收货地址</string>
+    <string name="receive_address_auto">设为默认</string>
+    <string name="receive_address_add">新增地址</string>
+    <string name="receive_address_project">地址：</string>
+    <string name="receive_address_project_hint">请选择楼盘</string>
+    <string name="receive_address_null_hint">请选择服务地址</string>
+    <string name="receive_address_name">联系人：</string>
+    <string name="receive_address_name_hint">请输入联系人姓名</string>
+    <string name="receive_remart_hint">请填写要补充的内容</string>
+    <string name="receive_address_position">位置</string>
+
+
+    <!-- 订单 -->
+    <string name="order_price_format">服务费用：%1$s元</string>
+    <string name="order_area_format">你的住房面积：%1$s平方</string>
+    <string name="order_no_coupon">无可用优惠券</string>
+    <string name="order_select_coupon">选择优惠券</string>
+    <string name="order_count">选择购买数量</string>
+    <string name="order_water_hint">如果家里没有对应品牌空桶或需要水泵请一并购买</string>
+    <string name="order_pay_price_format">实际付款：%s</string>
+    <string name="order_shop_count_format">结算商品数量：%d</string>
+    <string name="order_shop_price_format">总费用：%s元</string>
+    <string name="cart_shop_price_format">总价：￥%s</string>
+    <string name="order_count_format">结算商品数量：%d件</string>
+    <string name="product_pay_title">订单支付</string>
+    <string name="price_format">￥%s</string>
+    <string name="count_format">×%d</string>
+    <string name="count_format_string">×%s</string>
+
+    <string name="only_demo">你想用?、</string>
+    <string name="press_to_exit">再按一次返回键退出程序</string>
+
+    <string name="main_server">小区服务</string>
+    <string name="main_property">我的物业</string>
+    <string name="main_shop">购物车</string>
+    <string name="main_myself">个人中心</string>
+
+    <string name="myself_balance_title">物业余额</string>
+    <string name="myself_balance">物业余额（元）</string>
+    <string name="myself_order">我的订单</string>
+    <string name="myself_coupon">优惠券</string>
+    <string name="myself_info">个人资料</string>
+    <string name="myself_head">头像</string>
+    <string name="myself_name">昵称</string>
+    <string name="myself_change_pwd">修改密码</string>
+    <string name="myself_feedback">意见反馈</string>
+    <string name="myself_server">联系客服</string>
+    <string name="myself_logout">退出登录</string>
+    <string name="myself_login">点我登录</string>
+
+    <string name="property_meter">6月水费</string>
+    <string name="property_ammeter">6月电费</string>
+    <string name="property_property_costs">6月物业费</string>
+    <string name="property_notication">物业公告</string>
+    <string name="property_cost_search">费用查询</string>
+    <string name="property_cost_record">缴费记录</string>
+    <string name="property_cost_pay">缴费</string>
+    <string name="property_publish_repair">公共报修</string>
+    <string name="property_home_authenticate">房屋认证</string>
+    <string name="property_visitor_auth">访客授权</string>
+    <string name="property_complain_praise">投诉表扬</string>
+    <string name="property_contact_property">联系物管</string>
+
+    <string name="property_select">选中物业</string>
+
+    <string name="button_sure">确定</string>
+    <string name="button_save">保存</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_register">注册</string>
+    <string name="button_login">登录</string>
+    <string name="button_get_code">获取验证码</string>
+    <string name="button_add_address">添加收货地址</string>
+    <string name="button_delete">删除</string>
+    <string name="button_update">编辑</string>
+    <string name="button_reservation">立即预约</string>
+    <string name="button_add_cart">加入购物车</string>
+    <string name="button_buy_now">立即购买</string>
+    <string name="button_order_cancel">取消订单</string>
+    <string name="button_order_pay">立即付款</string>
+    <string name="button_order_back">申请退款</string>
+
+    <!-- 物业余额 -->
+    <string name="balance_recharge">充值</string>
+    <string name="balance_tip">物业余额是每个物业单元里面共同基金，经过实名认证的业主及业主嫁人都可以使用该余额在此商城上消费</string>
+    <string name="balance_record">明细</string>
+    <string name="balance_deduction">自动扣费设置</string>
+    <string name="balance_password">支付密码设置</string>
+    <string name="balance_safe">关于账户安全</string>
+
+    <string name="balance_record_time">时间：</string>
+    <string name="balance_record_change">变  动：</string>
+    <string name="balance_record_balance">    余额：</string>
+    <string name="balance_record_remark">    备注：</string>
+    <string name="balance_record_operator">操作人：</string>
+    <string name="balance_deduction_tip">每月定时扣除物业相关费用</string>
+    <string name="balance_deduction_describe">每月定时扣除该物业对应的物业管理费、水费、电费、停车费等，扣费情况可查看-我的物业-费用查缴</string>
+    <string name="balance_password_tip">使用余额支付时要先输入支付密码</string>
+    <string name="balance_password_describe">物业余额每天使用额度为500元。只有你和你的家人能使用。使用范围是邻檬圈商城内的服务和商品。选中“关闭”则可以免密码使用余额</string>
+    <string name="balance_password_change">修改支付密码</string>
+
+    <!-- 优惠券 -->
+    <string name="coupon_no_use">未使用</string>
+    <string name="coupon_use">已使用</string>
+    <string name="coupon_outtime">已过期</string>
+    <string name="coupon_valid_time_format">有效期：%s</string>
+
+    <!-- 订单 -->
+    <string name="order_all">全部</string>
+    <string name="order_pay">待付款</string>
+    <string name="order_server">待服务</string>
+    <string name="order_finish">已完成</string>
+    <string name="order_check">审核中</string>
+    <string name="order_complete">已完成</string>
+    <string name="shop_pay">订单支付</string>
+    <string name="shop_pay_detail">订单详情</string>
+    <string name="order_detail_num">订单号：</string>
+    <string name="order_detail_address">配送地点：</string>
+    <string name="server_address">服务地址</string>
+    <string name="order_detail_type">配送方式：</string>
+    <string name="order_detail_time">配送时间：</string>
+    <string name="order_detail_pay">支付方式：</string>
+    <string name="order_detail_phone">联系电话：</string>
+
+    <!-- 访客授权 -->
+    <string name="visitors_auth_record">授权记录</string>
+    <string name="visitors_name">访客姓名</string>
+    <string name="visitors_phone">访客联系方式</string>
+    <string name="visitors_reason">来访事由</string>
+    <string name="visitors_tip">门禁码24小时后或使用一次后失效\n访客在小区门口向保安出事门禁码即可进入</string>
+    <string name="visitors_code">门禁码</string>
+    <string name="visitors_record">授权记录</string>
+    <string name="visitors_record_code">门禁码：</string>
+    <string name="visitors_record_visitor">访客：</string>
+    <string name="visitors_record_remark">备注：</string>
+    <string name="visitors_record_time">有效时间：</string>
+
+
+    <string name="pat_train_tip">1.订单提交后，两个工作日内我们会有相关工作人员主动联系您，请耐心等待\n2.更多咨询，可联系客服 400-930-2220</string>
+    <string name="order_clothes_tip">若因选择的衣服种类与实际收衣时不符，导致价格差异，由收衣员线下根据实际情况进行多退少补</string>
+
+
+</resources>

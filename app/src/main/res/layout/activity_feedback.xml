@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_view" />
+
+    <EditText
+        android:id="@+id/order_finish_remark"
+        style="@style/content_area_style"
+        android:layout_marginTop="@dimen/auto_space"
+        android:background="@android:color/white"
+        android:layout_below="@id/toolbar"
+        android:lines="4"
+        android:hint="请输入您的问题或意见,我们将努力提供更好的用户体验"
+        android:paddingBottom="@dimen/auto_space"
+        android:paddingLeft="@dimen/fab_margin"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingTop="@dimen/auto_space" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_bottom_height"
+        android:layout_alignParentBottom="true"
+        layout="@layout/bottom_button" />
+</RelativeLayout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <!--<RelativeLayout
+        android:id="@+id/property_message_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/property_bg"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+
+        <include
+            layout="@layout/property_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/auth_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:paddingBottom="@dimen/small_space"
+            android:paddingLeft="@dimen/middle_space"
+            android:paddingRight="@dimen/middle_space"
+            android:paddingTop="@dimen/small_space"
+            android:text="会员"
+            android:textColor="#ffd200" />
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_toLeftOf="@id/auth_tip"
+            android:src="@drawable/ic_auth"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:id="@+id/property_balance_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/auth_tip"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:onClick="balanceClick"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/myself_balance"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/property_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/small_space"
+                android:text="200.0"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_big" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/property_balance_tip"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/auto_space"
+            android:paddingTop="@dimen/icon_size">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/property_meter"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/property_meter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_space"
+                    android:text="150.00"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/view_space"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/property_ammeter"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/property_ammeter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_space"
+                    android:text="350.00"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/view_space"
+                android:layout_height="match_parent"
+                android:background="@android:color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/property_property_costs"
+                    android:textColor="@android:color/white" />
+
+                <TextView
+                    android:id="@+id/property_property_costs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/small_space"
+                    android:text="25.00"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/view_space"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:verticalSpacing="@dimen/view_space" />-->
+
+    <include layout="@layout/no_comfirm" />
+
+</LinearLayout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_pressed_bg"
+    android:padding="@dimen/auto_space">
+
+    <TextView
+        android:id="@+id/buy_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:textColor="@color/text_deep_color" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/buy_time"
+        android:text="距结束还有："
+        android:textColor="@color/text_main_color" />
+
+    <include
+        android:id="@+id/buy_time_line"
+        layout="@layout/item_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_space"
+        android:layout_below="@id/buy_time"
+        android:layout_marginBottom="@dimen/auto_space"
+        android:layout_marginTop="@dimen/auto_space" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buy_time_line">
+
+        <ImageView
+            android:id="@+id/goods_image"
+            android:layout_width="@dimen/goods_size"
+            android:layout_height="@dimen/goods_size" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:layout_toRightOf="@id/goods_image">
+
+            <TextView
+                android:id="@+id/goods_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textColor="@color/text_main_color" />
+
+            <RelativeLayout
+                android:id="@+id/goods_detail_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/goods_title"
+                android:layout_marginTop="@dimen/middle_space">
+
+                <TextView
+                    android:id="@+id/goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/notice_color" />
+
+                <TextView
+                    android:id="@+id/goods_old_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/auto_space"
+                    android:layout_toRightOf="@id/goods_price"
+                    android:textColor="@color/text_second_color"
+                    android:textSize="@dimen/text_size_small" />
+
+                <TextView
+                    android:id="@+id/buy_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/red_btn_bg"
+                    android:paddingBottom="@dimen/middle_space"
+                    android:paddingLeft="@dimen/auto_space"
+                    android:paddingRight="@dimen/auto_space"
+                    android:paddingTop="@dimen/middle_space"
+                    android:text="限时抢购"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="120dp"
+                android:layout_height="@dimen/icon_size"
+                android:layout_below="@id/goods_detail_content"
+                android:layout_marginTop="@dimen/middle_space"
+                android:progressDrawable="@drawable/progressbar_buy" />
+
+            <TextView
+                android:id="@+id/goods_sell_progress"
+                android:layout_width="120dp"
+                android:layout_height="@dimen/icon_size"
+                android:layout_below="@id/goods_detail_content"
+                android:layout_marginTop="@dimen/middle_space"
+                android:gravity="center"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/goods_sell_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/goods_detail_content"
+                android:layout_marginTop="@dimen/middle_space"
+                android:textColor="@color/notice_color" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

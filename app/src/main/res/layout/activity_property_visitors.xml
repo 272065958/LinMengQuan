@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <include layout="@layout/property_location_select" />
+
+    <include layout="@layout/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_repair_name" />
+
+        <EditText
+            android:id="@+id/visitors_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/property_icon_size"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:background="@null"
+            android:hint="@string/visitors_name"
+            android:singleLine="true"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_second_color"
+            android:textSize="@dimen/text_size_middle" />
+
+    </LinearLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_repair_phone" />
+
+        <EditText
+            android:id="@+id/visitors_phone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/property_icon_size"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:background="@null"
+            android:hint="@string/visitors_phone"
+            android:singleLine="true"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_second_color"
+            android:textSize="@dimen/text_size_middle" />
+
+    </LinearLayout>
+
+    <include layout="@layout/item_divider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/auto_space">
+
+        <ImageView
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:src="@drawable/ic_remark" />
+
+        <EditText
+            android:id="@+id/repair_detail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/property_icon_size"
+            android:layout_marginLeft="@dimen/auto_space"
+            android:background="@null"
+            android:hint="@string/visitors_reason"
+            android:singleLine="true"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_second_color"
+            android:textSize="@dimen/text_size_middle" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/auto_space"
+        android:text="@string/visitors_tip"
+        android:textColor="@color/text_second_color" />
+
+    <include layout="@layout/bottom_button" />
+</LinearLayout>

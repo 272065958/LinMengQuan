@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/auto_space">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_repair_address" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/property_icon_size"
+                    android:layout_marginLeft="@dimen/auto_space"
+                    android:gravity="center"
+                    android:text="嘉信城市花园1期"
+                    android:textColor="@color/text_main_color" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/auto_space">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_repair_phone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/property_icon_size"
+                    android:layout_marginLeft="@dimen/auto_space"
+                    android:gravity="center"
+                    android:text="13670675239"
+                    android:textColor="@color/text_main_color" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/auto_space">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_repair_detail" />
+
+                <EditText
+                    android:id="@+id/repair_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/property_icon_size"
+                    android:layout_marginLeft="@dimen/auto_space"
+                    android:hint="请填上详细地点"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:textColor="@color/text_main_color"
+                    android:textColorHint="@color/text_second_color"
+                    android:textSize="@dimen/text_size_middle" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/auto_space">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/ic_repair_name" />
+
+                <EditText
+                    android:id="@+id/repair_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/property_icon_size"
+                    android:layout_marginLeft="@dimen/auto_space"
+                    android:hint="请填上你的名字"
+                    android:singleLine="true"
+                    android:textColor="@color/text_main_color"
+                    android:textColorHint="@color/text_second_color"
+                    android:background="@null"
+                    android:textSize="@dimen/text_size_middle" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_divider" />
+
+            <EditText
+                android:id="@+id/order_finish_remark"
+                style="@style/content_area_style"
+                android:layout_marginTop="@dimen/auto_space"
+                android:background="@android:color/white"
+                android:hint="请填上问题描述"
+                android:paddingBottom="@dimen/auto_space"
+                android:paddingLeft="@dimen/fab_margin"
+                android:paddingRight="@dimen/fab_margin"
+                android:paddingTop="@dimen/auto_space" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auto_space"
+                android:background="@android:color/white"
+                android:padding="@dimen/auto_space"
+                android:text="相关图片" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingBottom="@dimen/auto_space">
+
+                <LinearLayout
+                    android:id="@+id/photo_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/auto_space"
+                    android:paddingRight="@dimen/auto_space" />
+            </HorizontalScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/bottom_button" />
+</LinearLayout>

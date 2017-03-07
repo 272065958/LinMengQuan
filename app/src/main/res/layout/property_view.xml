@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shadow_bg"
+    android:drawablePadding="@dimen/auto_space"
+    android:drawableRight="@drawable/ic_expend"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/small_space"
+    android:paddingLeft="@dimen/auto_space"
+    android:paddingRight="@dimen/auto_space"
+    android:paddingTop="@dimen/small_space"
+    android:text="嘉信城市广场1期"
+    android:onClick="propertySelect"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/text_size_middle" />

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_view" />
+
+    <include layout="@layout/property_location_select" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/auto_space"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/auto_space">
+
+        <TextView
+            android:id="@+id/identity_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/middle_space"
+            android:text="你的身份"
+            android:textColor="@color/text_main_color" />
+
+        <TextView
+            android:id="@+id/identity_owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/identity_tip"
+            android:background="@drawable/select_frame_bg"
+            android:onClick="identityClick"
+            android:paddingTop="@dimen/auto_space"
+            android:paddingBottom="@dimen/auto_space"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:text="我是业主"
+            android:textColor="@color/text_main_color" />
+
+        <TextView
+            android:id="@+id/identity_owner_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/identity_tip"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/select_frame_bg"
+            android:onClick="identityClick"
+            android:paddingTop="@dimen/auto_space"
+            android:paddingBottom="@dimen/auto_space"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:text="我是业主家人"
+            android:textColor="@color/text_main_color" />
+
+        <TextView
+            android:id="@+id/identity_tenant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/identity_tip"
+            android:background="@drawable/select_frame_bg"
+            android:onClick="identityClick"
+            android:paddingTop="@dimen/auto_space"
+            android:paddingBottom="@dimen/auto_space"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin"
+            android:text="我是租户"
+            android:textColor="@color/text_main_color" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/identity_owner_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/auto_space"
+        android:paddingBottom="@dimen/auto_space"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_main_color"
+            android:padding="@dimen/auto_space"
+            android:text="证件照：请上传身份证证件正反两面照"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/auto_space"
+            android:paddingRight="@dimen/auto_space"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/identity_image_1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add_image_icon"/>
+
+            <ImageView
+                android:id="@+id/identity_image_2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="@dimen/auto_space"
+                android:src="@drawable/add_image_icon"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/identity_owner_family_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/listview_divider"
+            android:padding="@dimen/auto_space"
+            android:text="在物业登记处预留的业主手机号为：136****7523" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/auto_space">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_repair_name" />
+
+            <EditText
+                android:id="@+id/auth_phone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/property_icon_size"
+                android:layout_marginLeft="@dimen/auto_space"
+                android:layout_weight="1"
+                android:hint="请填上业主完整手机号"
+                android:singleLine="true"
+                android:background="@null"
+                android:textColor="@color/text_main_color"
+                android:textColorHint="@color/text_second_color"
+                android:textSize="@dimen/text_size_middle" />
+
+            <TextView
+                android:id="@+id/auth_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/identity_tip"
+                android:layout_marginLeft="@dimen/auto_space"
+                android:layout_marginRight="@dimen/auto_space"
+                android:background="@drawable/select_frame_bg"
+                android:padding="@dimen/auto_space"
+                android:text="获取短信认证码" />
+        </LinearLayout>
+
+        <include layout="@layout/item_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/auto_space">
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_auth_code" />
+
+            <EditText
+                android:id="@+id/repair_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/property_icon_size"
+                android:layout_marginLeft="@dimen/auto_space"
+                android:hint="请填上验证码"
+                android:background="@null"
+                android:singleLine="true"
+                android:textColor="@color/text_main_color"
+                android:textColorHint="@color/text_second_color"
+                android:textSize="@dimen/text_size_middle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <include layout="@layout/bottom_button" />
+</LinearLayout>
