@@ -19,10 +19,8 @@ import net.kamfat.omengo.base.BaseTabActivity;
 import net.kamfat.omengo.base.MyBaseAdapter;
 import net.kamfat.omengo.bean.OrderBean;
 import net.kamfat.omengo.bean.OrderItemBean;
-import net.kamfat.omengo.bean.api.DatumResponse;
 import net.kamfat.omengo.http.HttpUtils;
-import net.kamfat.omengo.http.MyCallbackInterface;
-import net.kamfat.omengo.server.PayActivity;
+import net.kamfat.omengo.util.OrderOperateUtil;
 import net.kamfat.omengo.util.Tools;
 
 import java.util.ArrayList;
@@ -69,7 +67,7 @@ public class MyOrderActivity extends BaseTabActivity {
 
     class OrderAdapter extends MyBaseAdapter {
 
-        public OrderAdapter(ArrayList<?> list, BaseActivity context) {
+        OrderAdapter(ArrayList<?> list, BaseActivity context) {
             super(list, context);
         }
 
@@ -177,19 +175,32 @@ public class MyOrderActivity extends BaseTabActivity {
                     startActivity(intent);
                 } else {
                     OrderBean ob = (OrderBean) v.getTag(R.id.order_detail_num);
+                    OrderOperateUtil util = OrderOperateUtil.getUtil();
                     switch ((int) v.getTag()) {
                         case R.string.button_order_back: // 申请退款
                             break;
                         case R.string.button_order_cancel: // 取消订单
-                            cancelOrder(ob.sn);
+                            util.cancelOrder(new OrderOperateUtil.CancelInterface() {
+                                @Override
+                                public void beforeCancel() {
+                                    showLoadDislog();
+                                }
+
+                                @Override
+                                public void cancelSuccess(String message) {
+                                    showToast(message);
+                                    dismissLoadDialog();
+                                    refresh();
+                                }
+
+                                @Override
+                                public void cancelFail() {
+                                    dismissLoadDialog();
+                                }
+                            }, MyOrderActivity.this, ob.sn);
                             break;
                         case R.string.button_order_pay: // 订单支付
-                            Intent payIntent = new Intent(MyOrderActivity.this, PayActivity.class);
-                            payIntent.putExtra("id", ob.id);
-                            payIntent.putExtra("price", ob.amount);
-                            // String sn = jsonObject.getString("orderSn");
-                            payIntent.putExtra("title", "订单支付");
-                            startActivity(payIntent);
+                            util.goToPay(MyOrderActivity.this, ob.id, ob.amount);
                             break;
                     }
                 }
@@ -197,23 +208,6 @@ public class MyOrderActivity extends BaseTabActivity {
         }
     }
 
-    public void cancelOrder(String sn){
-        showLoadDislog();
-        MyCallbackInterface callbackInterface = new MyCallbackInterface() {
-            @Override
-            public void success(DatumResponse response) {
-                dismissLoadDialog();
-                showToast(response.message);
-                refresh();
-            }
-
-            @Override
-            public void error() {
-                dismissLoadDialog();
-            }
-        };
-        HttpUtils.getInstance().postEnqueue(this, callbackInterface, "order/cancel", "sn", sn);
-    }
 
     class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -222,7 +216,7 @@ public class MyOrderActivity extends BaseTabActivity {
         int size;
         int margin;
 
-        public ProductAdapter(ArrayList<OrderItemBean> list, BaseActivity context) {
+        ProductAdapter(ArrayList<OrderItemBean> list, BaseActivity context) {
             this.list = list;
             this.context = context;
             size = getResources().getDimensionPixelSize(R.dimen.image_size);

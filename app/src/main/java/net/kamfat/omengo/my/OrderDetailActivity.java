@@ -20,6 +20,7 @@ import net.kamfat.omengo.bean.api.DatumResponse;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
 import net.kamfat.omengo.util.JsonParser;
+import net.kamfat.omengo.util.OrderOperateUtil;
 import net.kamfat.omengo.util.Tools;
 
 import org.json.JSONArray;
@@ -31,7 +32,9 @@ import java.util.ArrayList;
 /**
  * Created by cjx on 2016/9/14.
  */
-public class OrderDetailActivity extends BaseListActivity implements View.OnClickListener{
+public class OrderDetailActivity extends BaseListActivity implements View.OnClickListener {
+    String orderId, orderAmount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +52,30 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        OrderOperateUtil util = OrderOperateUtil.getUtil();
         switch ((int) v.getTag()) {
             case R.string.button_order_back: // 申请退款
                 break;
             case R.string.button_order_cancel: // 取消订单
+                util.cancelOrder(new OrderOperateUtil.CancelInterface() {
+                    @Override
+                    public void beforeCancel() {
+                        showLoadDislog();
+                    }
+
+                    @Override
+                    public void cancelSuccess(String message) {
+                        dismissLoadDialog();
+                        showToast(message);
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+
+                    @Override
+                    public void cancelFail() {
+                        dismissLoadDialog();
+                    }
+                }, OrderDetailActivity.this, getIntent().getAction());
                 break;
             case R.string.button_order_pay: // 订单支付
                 break;
@@ -77,11 +100,11 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
 
                     // 显示底部按钮
                     int status = getIntent().getIntExtra("status", -1);
-                    if(status > 0){
+                    if (status > 0) {
                         findViewById(R.id.bottom_button_content).setVisibility(View.VISIBLE);
                         TextView button1 = (TextView) findViewById(R.id.order_button_1);
                         button1.setOnClickListener(OrderDetailActivity.this);
-                        switch (status){
+                        switch (status) {
                             case 1:// 待付款
                                 button1.setText(R.string.button_order_pay);
                                 button1.setTag(R.string.button_order_pay);
@@ -119,36 +142,42 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
         TextView timeView = (TextView) view.findViewById(R.id.order_detail_time);
         TextView payView = (TextView) view.findViewById(R.id.order_detail_pay);
         TextView phoneView = (TextView) view.findViewById(R.id.order_detail_phone);
-        if(json.has("address")){
+        if (json.has("address")) {
             addressView.setText(json.getString("address"));
         }
-        if(json.has("sn")){
+        if (json.has("sn")) {
             numView.setText(json.getString("sn"));
         }
-        if(json.has("shipping_method_name")){
+        if (json.has("shipping_method_name")) {
             typeView.setText(json.getString("shipping_method_name"));
         }
-        if(json.has("payment_method_name")){
+        if (json.has("payment_method_name")) {
             payView.setText(json.getString("payment_method_name"));
         }
-        if(json.has("service_date")){
+        if (json.has("service_date")) {
             timeView.setText(json.getString("service_date"));
         }
-        if(json.has("phone")){
+        if (json.has("phone")) {
             phoneView.setText(json.getString("phone"));
+        }
+        if (json.has("id")) {
+            orderId = json.getString("id");
+        }
+        if (json.has("amount")) {
+            orderAmount = json.getString("amount");
         }
         return view;
     }
 
     // 获取headerview
-    private View getFooterView(JSONObject json) throws JSONException{
+    private View getFooterView(JSONObject json) throws JSONException {
         View view = View.inflate(this, R.layout.footer_order_detail, null);
         TextView priceView = (TextView) view.findViewById(R.id.order_price);
         TextView timeView = (TextView) view.findViewById(R.id.order_time);
-        if(json.has("amount")){
+        if (json.has("amount")) {
             priceView.setText(String.format(getString(R.string.price_format), json.getString("amount")));
         }
-        if(json.has("creation_date")){
+        if (json.has("creation_date")) {
             timeView.setText(json.getString("creation_date"));
         }
         return view;

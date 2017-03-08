@@ -135,11 +135,6 @@
             android:orientation="horizontal"
             android:padding="@dimen/auto_space">
 
-            <ImageView
-                android:layout_width="@dimen/icon_size"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/ic_repair_name" />
-
             <EditText
                 android:id="@+id/auth_phone"
                 android:layout_width="0dp"

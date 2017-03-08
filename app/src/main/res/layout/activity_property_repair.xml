@@ -26,11 +26,6 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/auto_space">
 
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/ic_repair_address" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/property_icon_size"
@@ -51,11 +46,6 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/auto_space">
 
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/ic_repair_phone" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/property_icon_size"
@@ -75,11 +65,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/auto_space">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/ic_repair_detail" />
 
                 <EditText
                     android:id="@+id/repair_detail"
@@ -104,11 +89,6 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/auto_space">
-
-                <ImageView
-                    android:layout_width="@dimen/icon_size"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/ic_repair_name" />
 
                 <EditText
                     android:id="@+id/repair_name"

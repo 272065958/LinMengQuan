@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 
 public class ImageRepeatPagerAdapter extends PagerAdapter {
-    View[] views;
-    int photoCount = 0;
-    ArrayList<ServerBean> photos;
-    Activity context;
-    View first, last;
+    private View[] views;
+    private int photoCount = 0;
+    private ArrayList<ServerBean> photos;
+    private Activity context;
+    private View first, last;
 
     public ImageRepeatPagerAdapter(Activity context, View first, View last, View[] l, ArrayList<ServerBean> photos) {
         this.context = context;
