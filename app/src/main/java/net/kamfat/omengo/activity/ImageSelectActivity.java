@@ -1,17 +1,23 @@
 package net.kamfat.omengo.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,6 +51,7 @@ import java.util.Iterator;
  * Created by cjx  选择手机图片界面
  */
 public class ImageSelectActivity extends BaseActivity implements OnClickListener {
+    final int REQUEST_WRITE_PERMISSIONS = 2;
     ArrayList<FileBean> folderList;
     GridView folderGrid, imageGrid;
     TextView uploadTv;
@@ -64,37 +71,33 @@ public class ImageSelectActivity extends BaseActivity implements OnClickListener
                 onBackPressed();
             }
         }, -1);
-        // 一个显示文件夹的gridview 一个显示图片列表的gridview
-        folderGrid = (GridView) findViewById(R.id.photo_select_folder);
-        imageGrid = (GridView) findViewById(R.id.photo_select_image);
-        imageGrid.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                if (uploadTv != null) {
-                    uploadTv.setText(String.format(getString(R.string.select_photo_upload),
-                            imageAdapter.clickAt(view, position)));
-                } else {
-                    String path = (String) view.getTag(R.id.photo_select_image);
-                    Intent data = new Intent();
-                    data.putExtra("photo", new String[]{path});
-                    setResult(RESULT_OK, data);
-                    finish();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    explainDialog();
+                    return;
                 }
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_WRITE_PERMISSIONS);
+                return ;
             }
-        });
-
-        String action = getIntent().getAction();
-        if (action == null) { // 这里控制是否多选图片  没有action表示可以多选
-            uploadTv = (TextView) findViewById(R.id.photo_select_tip);
-            uploadTv.setOnClickListener(this);
-            uploadTv.setVisibility(View.VISIBLE);
-            uploadTv.setText(String.format(getString(R.string.select_photo_upload), 0));
         }
-        screenWidth = ((OmengoApplication) getApplication()).getScreen_width();
 
-        loadImage();
+        initView();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_WRITE_PERMISSIONS) {
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                showToast("无权限读到相册");
+                finish();
+            } else {
+                initView();
+            }
+        }
     }
 
     @Override
@@ -152,6 +155,62 @@ public class ImageSelectActivity extends BaseActivity implements OnClickListener
                 }
                 break;
         }
+    }
+
+    // 显示获取权限说明
+    private void explainDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("选择照片需要读写内存卡权限,是否授权？")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //请求权限
+                        ActivityCompat.requestPermissions(ImageSelectActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                REQUEST_WRITE_PERMISSIONS);
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        showToast("无权限读到相册");
+                        finish();
+                    }
+                })
+                .create().show();
+    }
+
+    private void initView() {
+        // 一个显示文件夹的gridview 一个显示图片列表的gridview
+        folderGrid = (GridView) findViewById(R.id.photo_select_folder);
+        imageGrid = (GridView) findViewById(R.id.photo_select_image);
+        imageGrid.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (uploadTv != null) {
+                    uploadTv.setText(String.format(getString(R.string.select_photo_upload),
+                            imageAdapter.clickAt(view, position)));
+                } else {
+                    String path = (String) view.getTag(R.id.photo_select_image);
+                    Intent data = new Intent();
+                    data.putExtra("photo", new String[]{path});
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+            }
+        });
+
+        String action = getIntent().getAction();
+        if (action == null) { // 这里控制是否多选图片  没有action表示可以多选
+            uploadTv = (TextView) findViewById(R.id.photo_select_tip);
+            uploadTv.setOnClickListener(this);
+            uploadTv.setVisibility(View.VISIBLE);
+            uploadTv.setText(String.format(getString(R.string.select_photo_upload), 0));
+        }
+        screenWidth = ((OmengoApplication) getApplication()).getScreen_width();
+
+        loadImage();
     }
 
     private void showFolderView() {

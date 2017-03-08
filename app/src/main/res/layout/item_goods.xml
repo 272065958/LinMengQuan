@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_pressed_bg"
+    android:background="@android:color/white"
     android:padding="@dimen/small_space"
     android:orientation="horizontal">
 
@@ -37,34 +37,15 @@
             android:textSize="@dimen/text_size_small"
             android:layout_marginTop="@dimen/middle_space"/>
 
-<!--        <TextView
-            android:id="@+id/goods_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/text_main_color"
-            android:textSize="@dimen/text_size_small"
-            android:layout_marginTop="@dimen/middle_space" />-->
-
-        <include
-            android:id="@+id/shop_count_view"
-            layout="@layout/item_shop_count_edit"
-            android:layout_gravity="right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/goods_rebate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/notice_color"
-        android:paddingLeft="@dimen/middle_space"
-        android:paddingRight="@dimen/middle_space"
-        android:paddingTop="@dimen/small_space"
-        android:paddingBottom="@dimen/small_space"
-        android:textColor="@android:color/white"
-        android:visibility="gone"
-        android:text="折扣"/>
+    <ImageView
+        android:id="@+id/goods_add_cart"
+        android:layout_width="@dimen/button_height"
+        android:layout_height="@dimen/button_height"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/auto_space"
+        android:src="@drawable/ic_mall_basket"/>
 
 </RelativeLayout>

@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
+import net.kamfat.omengo.R;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -172,7 +174,7 @@ public class Tools {
             return;
         }
         if (!TextUtils.isEmpty(path)) {
-            Glide.with(context).load(path).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageView) {
+            Glide.with(context).load(path).asBitmap().centerCrop().error(R.drawable.user_head).into(new BitmapImageViewTarget(imageView) {
                 @Override
                 protected void setResource(Bitmap resource) {
                     RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
@@ -181,7 +183,7 @@ public class Tools {
                 }
             });
         } else {
-            imageView.setImageBitmap(null);
+            imageView.setImageResource(R.drawable.user_head);
         }
     }
 }

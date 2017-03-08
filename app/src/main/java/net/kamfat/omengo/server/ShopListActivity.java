@@ -2,24 +2,24 @@ package net.kamfat.omengo.server;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.kamfat.omengo.OmengoApplication;
 import net.kamfat.omengo.R;
+import net.kamfat.omengo.activity.ShopCartActivity;
 import net.kamfat.omengo.base.BaseActivity;
 import net.kamfat.omengo.base.MyBaseAdapter;
-import net.kamfat.omengo.bean.BaseProductBean;
 import net.kamfat.omengo.bean.GoodsBean;
 import net.kamfat.omengo.bean.SortBean;
 import net.kamfat.omengo.bean.api.DatumResponse;
@@ -31,14 +31,16 @@ import net.kamfat.omengo.util.Tools;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
  * Created by cjx on 2016/9/7.
+ * 购买商品界面
  */
-public class ShopListActivity extends GoodBuyActivity {
+public class ShopListActivity extends BaseActivity {
     ArrayList<SortBean> sortList;
+    int cartCount;
+    TextView countView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +48,15 @@ public class ShopListActivity extends GoodBuyActivity {
         setContentView(R.layout.activity_shop_list);
         Intent intent = getIntent();
         setToolBar(true, null, intent.getAction());
-
-        addShopCart();
-
         loadData();
+        registerReceiver(new IntentFilter(OmengoApplication.ACTION_CART_COUNT_UPDATE));
     }
 
-    private void addShopCart() {
-        View shopCartView = View.inflate(this, R.layout.view_shop_cart, null);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = Gravity.RIGHT;
-        getToolBar().addView(shopCartView);
+    // 收到广播回调
+    @Override
+    protected void onBroadcastReceive(Intent intent) {
+        cartCount = intent.getIntExtra("count", cartCount);
+        showCartCount();
     }
 
     private void loadData() {
@@ -93,10 +93,29 @@ public class ShopListActivity extends GoodBuyActivity {
     }
 
     protected void findViewById() {
-        super.findViewById();
+        countView = (TextView) findViewById(R.id.shop_count);
         findViewById(R.id.goods_content).setVisibility(View.VISIBLE);
-        findViewById(R.id.bottom_button).setVisibility(View.VISIBLE);
         showCartCount();
+    }
+
+    Animation countAnimation;
+
+    // 显示购物车数量
+    private void showCartCount() {
+        if (cartCount > 0) {
+            if (countView.getVisibility() == View.GONE) {
+                countView.setVisibility(View.VISIBLE);
+            }
+            if (countAnimation == null) {
+                countAnimation = android.view.animation.AnimationUtils.loadAnimation(this, R.anim.cart_notice);
+            }
+            countView.setText(String.valueOf(cartCount));
+            countView.startAnimation(countAnimation);
+        } else {
+            if (countView.getVisibility() == View.VISIBLE) {
+                countView.setVisibility(View.GONE);
+            }
+        }
     }
 
     GoodsAdapter goodsAdapter;
@@ -132,43 +151,41 @@ public class ShopListActivity extends GoodBuyActivity {
         goodsView.setAdapter(goodsAdapter);
     }
 
-    @Override
-    protected ArrayList<BaseProductBean> getProducts() {
-        ArrayList<BaseProductBean> list = new ArrayList<>();
-        if (sortList != null && !sortList.isEmpty()) {
-            for (SortBean sb : sortList) {
-                for (GoodsBean gb : sb.buyList) {
-                    list.add(gb);
+    // 添加购物车
+    private void addCart(String id) {
+        showLoadDislog();
+        MyCallbackInterface callbackInterface = new MyCallbackInterface() {
+            @Override
+            public void success(DatumResponse response) {
+                dismissLoadDialog();
+                showToast(response.message);
+                try {
+                    cartCount = Integer.parseInt(response.datum);
+                    showCartCount();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        }
-        return list;
-    }
 
-    @Override
-    protected String[] getProductIdAndCount() {
-        StringBuilder ids = new StringBuilder();
-        StringBuilder quantitys = new StringBuilder();
-        if (sortList != null && !sortList.isEmpty()) {
-            for (SortBean sb : sortList) {
-                for (GoodsBean gb : sb.buyList) {
-                    if (ids.length() > 0) {
-                        ids.append(",");
-                        quantitys.append(",");
-                    }
-                    ids.append(gb.id);
-                    quantitys.append(gb.quantity);
-                }
+            @Override
+            public void error() {
+                dismissLoadDialog();
             }
-        }
-        return new String[]{ids.toString(), quantitys.toString()};
+        };
+        HttpUtils.getInstance().postEnqueue(this, callbackInterface, "cart/add", "id", id,
+                "quantity", "1");
+    }
+    // 进入购物车
+    public void buyClick(View v) {
+        Intent intent = new Intent(this, ShopCartActivity.class);
+        startActivity(intent);
     }
 
     class SortAdapter extends MyBaseAdapter {
 
         int currentSelectPosition = 0;
 
-        public SortAdapter(ArrayList<SortBean> list, BaseActivity context) {
+        SortAdapter(ArrayList<SortBean> list, BaseActivity context) {
             super(list, context);
         }
 
@@ -182,9 +199,9 @@ public class ShopListActivity extends GoodBuyActivity {
             ViewHolder ho = (ViewHolder) holder;
             View v = ho.getView();
             if (position == currentSelectPosition) {
-                v.setBackgroundColor(ContextCompat.getColor(context, R.color.item_pressed_color));
-            } else {
                 v.setBackgroundColor(Color.WHITE);
+            } else {
+                v.setBackgroundColor(ContextCompat.getColor(context, R.color.item_pressed_color));
             }
             SortBean sb = (SortBean) getItem(position);
             ho.nameView.setText(sb.name);
@@ -205,7 +222,7 @@ public class ShopListActivity extends GoodBuyActivity {
             return new ViewHolder(v);
         }
 
-        public void setCurrentSelect(int position) {
+        void setCurrentSelect(int position) {
             currentSelectPosition = position;
             notifyDataSetChanged();
         }
@@ -223,7 +240,7 @@ public class ShopListActivity extends GoodBuyActivity {
 
     class GoodsAdapter extends MyBaseAdapter {
 
-        public GoodsAdapter(ArrayList<GoodsBean> list, BaseActivity context) {
+        GoodsAdapter(ArrayList<GoodsBean> list, BaseActivity context) {
             super(list, context);
         }
 
@@ -237,14 +254,9 @@ public class ShopListActivity extends GoodBuyActivity {
             GoodsBean gb = (GoodsBean) getItem(position);
             ViewHolder ho = (ViewHolder) holder;
             ho.priceView.setText(String.format(getString(R.string.price_format), gb.price));
-//            ho.stockView.setText("库存：" + gb.stock);
             ho.titleView.setText(gb.name);
             Tools.setImage(context, ho.imageView, gb.image);
-            ho.addView.setTag(gb);
-            ho.minusView.setTag(gb);
-            ho.addView.setTag(R.id.count_view, ho.countView);
-            ho.minusView.setTag(R.id.count_view, ho.countView);
-            ho.countView.setText(String.valueOf(gb.quantity));
+            ho.addCartView.setTag(gb.id);
         }
 
         @Override
@@ -253,71 +265,24 @@ public class ShopListActivity extends GoodBuyActivity {
         }
 
         class ViewHolder extends MyViewHolder implements View.OnClickListener {
-            View rebateView, addView, minusView;
+            View addCartView;
             ImageView imageView;
-            TextView titleView, priceView, stockView, countView;
+            TextView titleView, priceView;
 
             public ViewHolder(View v) {
                 super(v);
-//                stockView = (TextView) v.findViewById(R.id.goods_count);
-                rebateView = v.findViewById(R.id.goods_rebate);
+                addCartView = v.findViewById(R.id.goods_add_cart);
+                addCartView.setOnClickListener(this);
                 imageView = (ImageView) v.findViewById(R.id.goods_image);
                 titleView = (TextView) v.findViewById(R.id.goods_title);
                 priceView = (TextView) v.findViewById(R.id.goods_price);
-                addView = v.findViewById(R.id.count_add);
-                addView.setOnClickListener(this);
-                minusView = v.findViewById(R.id.count_minus);
-                minusView.setOnClickListener(this);
-                countView = (TextView) v.findViewById(R.id.count_view);
             }
 
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.count_add:
-                        shopCountAdd(v);
-                        break;
-                    case R.id.count_minus:
-                        shopCountMinus(v);
-                        break;
-                }
+                String id = (String) v.getTag();
+                addCart(id);
             }
         }
-    }
-
-    public void shopCountMinus(View view) {
-        GoodsBean gb = (GoodsBean) view.getTag();
-        if (gb.quantity > 0) {
-            gb.quantity--;
-            TextView buyCountView = (TextView) view.getTag(R.id.count_view);
-            buyCountView.setText("" + gb.quantity);
-            BigDecimal total = new BigDecimal(allPrice);
-            BigDecimal price = new BigDecimal(gb.price);
-            allPrice = total.subtract(price).toString();
-            showPrice();
-            if (gb.quantity == 0) {
-                SortBean sb = currentSort;
-                sb.buyList.remove(gb);
-            }
-            sortAdapter.notifyDataSetChanged();
-        }
-    }
-
-    public void shopCountAdd(View view) {
-        GoodsBean gb = (GoodsBean) view.getTag();
-//        if(gb.stock > gb.buyCount){ // 有存货才给加
-        if (gb.quantity == 0) {
-            SortBean sb = currentSort;
-            sb.buyList.add(gb);
-        }
-        gb.quantity++;
-        TextView buyCountView = (TextView) view.getTag(R.id.count_view);
-        buyCountView.setText("" + gb.quantity);
-        BigDecimal total = new BigDecimal(allPrice);
-        BigDecimal price = new BigDecimal(gb.price);
-        allPrice = total.add(price).toString();
-        showPrice();
-//        }
-        sortAdapter.notifyDataSetChanged();
     }
 }

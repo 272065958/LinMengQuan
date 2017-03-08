@@ -20,6 +20,7 @@ public class OmengoApplication extends Application {
     public final static String ACTION_ORDER_CREATE = "action_order_create_omengo";
     public final static String ACTION_CART_BUY = "action_cart_buy_omengo";
     public final static String ACTION_INFO_UPDATE = "action_info_update_omengo";
+    public final static String ACTION_CART_COUNT_UPDATE = "action_cart_count_update_omengo";
 
     public final static String WEIXIN_APPID = "wxfe31593ab3199bdf";
 

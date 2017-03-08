@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
+import net.kamfat.omengo.OmengoApplication;
 import net.kamfat.omengo.R;
 import net.kamfat.omengo.base.BaseFragment;
 import net.kamfat.omengo.activity.MainActivity;
@@ -87,7 +88,10 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        if (adapter == null) {
+            return;
+        }
+        switch (v.getId()) {
             case R.id.shop_cart_select_all:
                 selectAll(v);
                 break;
@@ -99,8 +103,8 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onRefresh() {
-        if(view == null){
-            return ;
+        if (view == null) {
+            return;
         }
         price = "0";
         setPrice();
@@ -125,7 +129,7 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
             case R.id.action_delete:
                 if (adapter != null) {
                     String ids = adapter.getSelectIds();
-                    if(ids != null){
+                    if (ids != null) {
                         shopDelete(ids);
                     }
                 }
@@ -196,25 +200,29 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
     // 解析后台返回的数据
     private void parserData(String datum) {
         try {
-            if(datum == null){
+            if (datum == null) {
                 onLoadResult(null);
-                return ;
+                return;
             }
             JSONObject obj = new JSONObject(datum);
             JsonParser parser = JsonParser.getInstance();
             if (obj.has("receiver")) {
                 address = parser.fromJson(obj.getString("receiver"), AddressBean.class);
             }
-            if(obj.has("coupon")){
-                couponList = parser.fromJson(obj.getString("coupon"), new TypeToken<ArrayList<CouponBean>>(){}.getType());
-                if(couponList != null){
-                    for(CouponBean cb : couponList){
+            if (obj.has("coupon")) {
+                couponList = parser.fromJson(obj.getString("coupon"), new TypeToken<ArrayList<CouponBean>>() {
+                }.getType());
+                if (couponList != null) {
+                    for (CouponBean cb : couponList) {
                         cb.initPrice();
                     }
                 }
             }
             if (obj.has("cartCount")) {
                 int count = obj.getInt("cartCount");
+                Intent intent = new Intent(OmengoApplication.ACTION_CART_COUNT_UPDATE);
+                intent.putExtra("count", count);
+                getActivity().sendBroadcast(intent);
             }
             if (obj.has("cartList")) {
                 ArrayList<CartBean> list = parser.fromJson(
@@ -317,19 +325,19 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
     }
 
     // 确认支付
-    private void pay(){
+    private void pay() {
         ArrayList<BaseProductBean> products = new ArrayList<>();
         ArrayList<CartBean> list = (ArrayList<CartBean>) adapter.list;
         if (list != null) {
             for (CartBean cb : list) {
                 for (ShopItemBean sib : cb.cartItems) {
-                    if(sib.isSelect){
+                    if (sib.isSelect) {
                         products.add(sib);
                     }
                 }
             }
         }
-        if(products.isEmpty()){
+        if (products.isEmpty()) {
             activity.showToast("请选择要购买的商品");
             return;
         }
@@ -403,7 +411,7 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
         }
 
         // 获取选中id
-        public String getSelectIds() {
+        String getSelectIds() {
             if (list == null) {
                 return null;
             }
@@ -412,7 +420,7 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
                 CartBean cb = (CartBean) ob;
                 for (ShopItemBean sib : cb.cartItems) {
                     if (sib.isSelect) {
-                        if(ids.length() > 0){
+                        if (ids.length() > 0) {
                             ids.append(",");
                         }
                         ids.append(sib.id);
@@ -455,7 +463,7 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
             ImageView imageView;
             TextView nameView, priceView, countView;
 
-            public ShopViewHolder(View v) {
+            ShopViewHolder(View v) {
                 super(v);
                 selectView = v.findViewById(R.id.shop_select_icon);
                 selectView.setOnClickListener(this);
@@ -463,13 +471,13 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
                 addView.setOnClickListener(this);
                 minusView = v.findViewById(R.id.count_minus);
                 minusView.setOnClickListener(this);
-                addView.setTag(R.id.count_view, countView);
-                minusView.setTag(R.id.count_view, countView);
 
                 imageView = (ImageView) v.findViewById(R.id.shop_detail_photo);
                 nameView = (TextView) v.findViewById(R.id.shop_detail_title);
                 priceView = (TextView) v.findViewById(R.id.shop_detail_price);
                 countView = (TextView) v.findViewById(R.id.count_view);
+                addView.setTag(R.id.count_view, countView);
+                minusView.setTag(R.id.count_view, countView);
             }
 
             @Override

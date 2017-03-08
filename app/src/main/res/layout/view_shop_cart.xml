@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/small_space"
         android:background="@drawable/notice_bg"
         android:gravity="center"
+        android:text="3"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_more_small"
-        android:visibility="gone" />
+        android:textSize="@dimen/text_size_more_small" />
 </RelativeLayout>
