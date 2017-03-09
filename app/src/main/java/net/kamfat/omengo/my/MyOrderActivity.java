@@ -27,6 +27,7 @@ import java.util.ArrayList;
 
 /**
  * Created by cjx on 2016/12/27.
+ * 我的订单
  */
 public class MyOrderActivity extends BaseTabActivity {
     String[] value;
@@ -142,6 +143,8 @@ public class MyOrderActivity extends BaseTabActivity {
             View detailView;
             RecyclerView recyclerView;
 
+            OrderOperateUtil.CancelInterface cancelInterface;
+            OrderOperateUtil util;
             public ViewHolder(View v) {
                 super(v);
                 v.setOnClickListener(this);
@@ -174,30 +177,35 @@ public class MyOrderActivity extends BaseTabActivity {
                     intent.putExtra("status", status);
                     startActivity(intent);
                 } else {
+                    if(util == null){
+                        util = new OrderOperateUtil();
+                    }
                     OrderBean ob = (OrderBean) v.getTag(R.id.order_detail_num);
-                    OrderOperateUtil util = OrderOperateUtil.getUtil();
                     switch ((int) v.getTag()) {
                         case R.string.button_order_back: // 申请退款
                             break;
                         case R.string.button_order_cancel: // 取消订单
-                            util.cancelOrder(new OrderOperateUtil.CancelInterface() {
-                                @Override
-                                public void beforeCancel() {
-                                    showLoadDislog();
-                                }
+                            if(cancelInterface == null){
+                                cancelInterface = new OrderOperateUtil.CancelInterface() {
+                                    @Override
+                                    public void beforeCancel() {
+                                        showLoadDislog();
+                                    }
 
-                                @Override
-                                public void cancelSuccess(String message) {
-                                    showToast(message);
-                                    dismissLoadDialog();
-                                    refresh();
-                                }
+                                    @Override
+                                    public void cancelSuccess(String message) {
+                                        showToast(message);
+                                        dismissLoadDialog();
+                                        refresh();
+                                    }
 
-                                @Override
-                                public void cancelFail() {
-                                    dismissLoadDialog();
-                                }
-                            }, MyOrderActivity.this, ob.sn);
+                                    @Override
+                                    public void cancelFail() {
+                                        dismissLoadDialog();
+                                    }
+                                };
+                            }
+                            util.showCancelTipDialog(cancelInterface, MyOrderActivity.this, ob.sn);
                             break;
                         case R.string.button_order_pay: // 订单支付
                             util.goToPay(MyOrderActivity.this, ob.id, ob.amount);

@@ -2,11 +2,12 @@ package net.kamfat.omengo.util;
 
 import android.content.Intent;
 
+import net.kamfat.omengo.R;
 import net.kamfat.omengo.base.BaseActivity;
 import net.kamfat.omengo.bean.api.DatumResponse;
+import net.kamfat.omengo.dialog.TipDialog;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
-import net.kamfat.omengo.my.MyOrderActivity;
 import net.kamfat.omengo.server.PayActivity;
 
 /**
@@ -15,16 +16,13 @@ import net.kamfat.omengo.server.PayActivity;
  */
 
 public class OrderOperateUtil {
-    private static OrderOperateUtil util = new OrderOperateUtil();
+    private TipDialog cancelDialog;
+    private DialogClickListener listener;
 
-    public static OrderOperateUtil getUtil(){
-        return util;
+    public OrderOperateUtil() {
     }
 
-    private OrderOperateUtil() {
-    }
-
-    public void cancelOrder(final CancelInterface cancelInterface, BaseActivity activity, String sn){
+    private void cancelOrder(final CancelInterface cancelInterface, BaseActivity activity, String sn) {
         cancelInterface.beforeCancel();
         MyCallbackInterface callbackInterface = new MyCallbackInterface() {
             @Override
@@ -40,7 +38,7 @@ public class OrderOperateUtil {
         HttpUtils.getInstance().postEnqueue(activity, callbackInterface, "order/cancel", "sn", sn);
     }
 
-    public void goToPay(BaseActivity activity, String id, String price){
+    public void goToPay(BaseActivity activity, String id, String price) {
         Intent payIntent = new Intent(activity, PayActivity.class);
         payIntent.putExtra("id", id);
         payIntent.putExtra("price", price);
@@ -49,9 +47,51 @@ public class OrderOperateUtil {
         activity.startActivity(payIntent);
     }
 
-    public interface CancelInterface{
+    // 提示取消订单的对话框
+    public void showCancelTipDialog(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+        if (cancelDialog == null) {
+            cancelDialog = new TipDialog(activity);
+            cancelDialog.setText(R.string.tip_title, R.string.cancel_order_tip, R.string.button_sure,
+                    R.string.button_cancel);
+            listener = new DialogClickListener(cancelInterface, activity, sn);
+            cancelDialog.setTipComfirmListener(listener);
+        } else {
+            listener.setParams(cancelInterface, activity, sn);
+        }
+        cancelDialog.show();
+    }
+
+    class DialogClickListener implements TipDialog.ComfirmListener {
+        CancelInterface cancelInterface;
+        BaseActivity activity;
+        String sn;
+
+        public DialogClickListener(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+            setParams(cancelInterface, activity, sn);
+        }
+
+        public void setParams(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+            this.sn = sn;
+            this.cancelInterface = cancelInterface;
+            this.activity = activity;
+        }
+
+        @Override
+        public void comfirm() {
+            cancelOrder(cancelInterface, activity, sn);
+        }
+
+        @Override
+        public void cancel() {
+            cancelDialog.dismiss();
+        }
+    }
+
+    public interface CancelInterface {
         void beforeCancel();
+
         void cancelSuccess(String message);
+
         void cancelFail();
     }
 }

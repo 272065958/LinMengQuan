@@ -34,6 +34,7 @@ import java.util.ArrayList;
  */
 public class OrderDetailActivity extends BaseListActivity implements View.OnClickListener {
     String orderId, orderAmount;
+    OrderOperateUtil util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +53,14 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        OrderOperateUtil util = OrderOperateUtil.getUtil();
+        if (util == null) {
+            util = new OrderOperateUtil();
+        }
         switch ((int) v.getTag()) {
             case R.string.button_order_back: // 申请退款
                 break;
             case R.string.button_order_cancel: // 取消订单
-                util.cancelOrder(new OrderOperateUtil.CancelInterface() {
+                util.showCancelTipDialog(new OrderOperateUtil.CancelInterface() {
                     @Override
                     public void beforeCancel() {
                         showLoadDislog();
@@ -78,6 +81,11 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
                 }, OrderDetailActivity.this, getIntent().getAction());
                 break;
             case R.string.button_order_pay: // 订单支付
+                if (orderAmount != null && orderId != null) {
+                    util.goToPay(this, orderId, orderAmount);
+                } else {
+                    showToast("订单信息不完全");
+                }
                 break;
         }
     }

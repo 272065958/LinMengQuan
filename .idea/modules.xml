@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OMENGO-master.iml" filepath="$PROJECT_DIR$/OMENGO-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LinMengQuan.iml" filepath="$PROJECT_DIR$/LinMengQuan.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

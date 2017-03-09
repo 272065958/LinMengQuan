@@ -43,7 +43,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <Button
             android:id="@+id/shop_cart_pay"
             android:layout_width="@dimen/goods_size"
             android:layout_height="match_parent"
