@@ -67,7 +67,7 @@ public class MyCouponActivity extends BaseTabActivity {
 
     @Override
     protected MyBaseAdapter getMyBaseAdapter(int position, ArrayList<?> list) {
-        return new CouponAdapter(list, this);
+        return new CouponAdapter(list, this, position);
     }
 
 }

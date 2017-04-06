@@ -3,6 +3,7 @@ package net.kamfat.omengo.server;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -104,21 +105,19 @@ public class ServerSelectActivity extends BaseListActivity {
     }
 
     class ServerAdapter extends MyBaseAdapter implements View.OnClickListener {
-        LinearLayout.LayoutParams leftParams;
-        LinearLayout.LayoutParams rightParams;
-        LinearLayout.LayoutParams llp;
+        LinearLayout.LayoutParams leftParams, rightParams;
         LinearLayout.LayoutParams lineParams;
+        LinearLayout.LayoutParams verLineParams;
 
         public ServerAdapter(ArrayList<?> list, BaseActivity context) {
             super(list, context);
             OmengoApplication app = (OmengoApplication) context.getApplication();
             int viewSpace = getResources().getDimensionPixelOffset(R.dimen.view_space);
             int width = (app.getScreen_width() - viewSpace) / 2;
-            llp = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-            leftParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+            leftParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rightParams = new LinearLayout.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
             lineParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewSpace);
-            rightParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-            rightParams.leftMargin = viewSpace;
+            verLineParams = new LinearLayout.LayoutParams(viewSpace, ViewGroup.LayoutParams.MATCH_PARENT);
         }
 
         @Override
@@ -162,6 +161,7 @@ public class ServerSelectActivity extends BaseListActivity {
 
         Stack<View> itemStack = new Stack<>();
         Stack<View> lineStack = new Stack<>();
+        Stack<View> verLineStack = new Stack<>();
         Stack<LinearLayout> contentStack = new Stack<>();
 
         private void initContentView(LinearLayout contentView, ArrayList<ServerChildBean> list) {
@@ -172,11 +172,18 @@ public class ServerSelectActivity extends BaseListActivity {
                 if(view instanceof LinearLayout){
                     if (view.isSelected()) {
                         LinearLayout linearLayout = (LinearLayout) view;
-                        for (int j = 1; j > -1; j--) {
-                            View itemView = linearLayout.getChildAt(j);
-                            itemStack.add(itemView);
-                            linearLayout.removeView(itemView);
-                        }
+                        View itemView = linearLayout.getChildAt(2);
+                        itemStack.add(itemView);
+                        linearLayout.removeView(itemView);
+
+                        View verLineView = linearLayout.getChildAt(1);
+                        verLineStack.add(verLineView);
+                        linearLayout.removeView(verLineView);
+
+                        itemView = linearLayout.getChildAt(0);
+                        itemStack.add(itemView);
+                        linearLayout.removeView(itemView);
+
                         contentStack.add(linearLayout);
                     } else {
                         itemStack.add(view);
@@ -195,23 +202,23 @@ public class ServerSelectActivity extends BaseListActivity {
                     contentView.addView(getLineView(), lineParams);
                 }
                 int p = i * 2;
+                LinearLayout linearLayout = getContentView();
                 View v1 = getItemView(list.get(p));
-                if (p == size - 1) {
-                    contentView.addView(v1, llp);
-                } else {
+                View verLineView = getVerLineView();
+                linearLayout.addView(v1, leftParams);
+                linearLayout.addView(verLineView, verLineParams);
+                if (p < size - 1) {
                     View v2 = getItemView(list.get(p + 1));
-                    LinearLayout linearLayout = getContentView();
-                    linearLayout.addView(v1, leftParams);
                     linearLayout.addView(v2, rightParams);
-                    contentView.addView(linearLayout);
                 }
+                contentView.addView(linearLayout);
             }
         }
 
         private LinearLayout getContentView() {
             if (contentStack.isEmpty()) {
                 LinearLayout linearLayout = new LinearLayout(context);
-                linearLayout.setBackgroundResource(R.color.divider_color);
+                linearLayout.setBackgroundColor(Color.WHITE);
                 linearLayout.setOrientation(LinearLayout.HORIZONTAL);
                 linearLayout.setSelected(true);
                 return linearLayout;
@@ -247,6 +254,14 @@ public class ServerSelectActivity extends BaseListActivity {
                 return View.inflate(context, R.layout.item_divider, null);
             } else {
                 return lineStack.pop();
+            }
+        }
+
+        private View getVerLineView(){
+            if (verLineStack.isEmpty()) {
+                return View.inflate(context, R.layout.item_divider, null);
+            } else {
+                return verLineStack.pop();
             }
         }
 

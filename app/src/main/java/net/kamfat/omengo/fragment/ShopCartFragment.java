@@ -31,6 +31,7 @@ import net.kamfat.omengo.bean.CartBean;
 import net.kamfat.omengo.bean.CouponBean;
 import net.kamfat.omengo.bean.ShopItemBean;
 import net.kamfat.omengo.bean.api.DatumResponse;
+import net.kamfat.omengo.dialog.TipDialog;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
 import net.kamfat.omengo.server.OrderActivity;
@@ -130,7 +131,7 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
                 if (adapter != null) {
                     String ids = adapter.getSelectIds();
                     if (ids != null) {
-                        shopDelete(ids);
+                        showDeleteDialog(ids);
                     }
                 }
                 break;
@@ -279,6 +280,29 @@ public class ShopCartFragment extends BaseFragment implements View.OnClickListen
         };
         HttpUtils.getInstance().postEnqueue(activity, callbackInterface, "cart/update",
                 "id", sib.product_id, "nums", String.valueOf(count));
+    }
+
+    TipDialog deleteDialog;
+    private void showDeleteDialog(String ids){
+        if(deleteDialog == null){
+            deleteDialog = new TipDialog(getActivity());
+            deleteDialog.setText(getString(R.string.tip_title), "是否移除选中商品?",
+                    getString(R.string.button_sure), getString(R.string.button_cancel));
+            deleteDialog.setTipComfirmListener(new TipDialog.ComfirmListener() {
+                @Override
+                public void comfirm() {
+                    deleteDialog.dismiss();
+                    shopDelete((String)deleteDialog.getTag());
+                }
+
+                @Override
+                public void cancel() {
+                    deleteDialog.dismiss();
+                }
+            });
+        }
+        deleteDialog.setTag(ids);
+        deleteDialog.show();
     }
 
     // 删除选中商品

@@ -45,7 +45,7 @@ public class CouponSelectActivity extends BaseListActivity implements AdapterVie
 
     @Override
     protected MyBaseAdapter getMyBaseAdapter(ArrayList<?> list) {
-        return new CouponAdapter(list, this);
+        return new CouponAdapter(list, this, 0);
     }
 
     @Override

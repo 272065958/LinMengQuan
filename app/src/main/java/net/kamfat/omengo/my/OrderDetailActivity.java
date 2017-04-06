@@ -2,6 +2,7 @@ package net.kamfat.omengo.my;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 public class OrderDetailActivity extends BaseListActivity implements View.OnClickListener {
     String orderId, orderAmount;
     OrderOperateUtil util;
+    OrderOperateUtil.CancelInterface cancelInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,28 +59,53 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
             util = new OrderOperateUtil();
         }
         switch ((int) v.getTag()) {
-            case R.string.button_order_back: // 申请退款
+            case R.string.button_order_comfirm: // 确认收货
+                if(cancelInterface == null){
+                    cancelInterface = new OrderOperateUtil.CancelInterface() {
+                        @Override
+                        public void beforeCancel() {
+                            showLoadDislog();
+                        }
+
+                        @Override
+                        public void cancelSuccess(String message) {
+                            showToast(message);
+                            dismissLoadDialog();
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+
+                        @Override
+                        public void cancelFail() {
+                            dismissLoadDialog();
+                        }
+                    };
+                }
+                util.showComfirmDialog(cancelInterface, OrderDetailActivity.this, getIntent().getAction());
                 break;
             case R.string.button_order_cancel: // 取消订单
-                util.showCancelTipDialog(new OrderOperateUtil.CancelInterface() {
-                    @Override
-                    public void beforeCancel() {
-                        showLoadDislog();
-                    }
+                if(cancelInterface == null){
+                    cancelInterface = new OrderOperateUtil.CancelInterface() {
+                        @Override
+                        public void beforeCancel() {
+                            showLoadDislog();
+                        }
 
-                    @Override
-                    public void cancelSuccess(String message) {
-                        dismissLoadDialog();
-                        showToast(message);
-                        setResult(RESULT_OK);
-                        finish();
-                    }
+                        @Override
+                        public void cancelSuccess(String message) {
+                            dismissLoadDialog();
+                            showToast(message);
+                            setResult(RESULT_OK);
+                            finish();
+                        }
 
-                    @Override
-                    public void cancelFail() {
-                        dismissLoadDialog();
-                    }
-                }, OrderDetailActivity.this, getIntent().getAction());
+                        @Override
+                        public void cancelFail() {
+                            dismissLoadDialog();
+                        }
+                    };
+                }
+                util.showCancelTipDialog(cancelInterface, OrderDetailActivity.this, getIntent().getAction());
                 break;
             case R.string.button_order_pay: // 订单支付
                 if (orderAmount != null && orderId != null) {
@@ -123,8 +150,8 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
                                 button2.setTag(R.string.button_order_cancel);
                                 break;
                             case 2:// 待服务
-                                button1.setText(R.string.button_order_back);
-                                button1.setTag(R.string.button_order_back);
+                                button1.setText(R.string.button_order_comfirm);
+                                button1.setTag(R.string.button_order_comfirm);
                                 break;
                         }
                     }
@@ -163,7 +190,13 @@ public class OrderDetailActivity extends BaseListActivity implements View.OnClic
             payView.setText(json.getString("payment_method_name"));
         }
         if (json.has("service_date")) {
-            timeView.setText(json.getString("service_date"));
+            String time = json.getString("service_date");
+            if(TextUtils.isEmpty(time) && !time.equals("null")){
+                timeView.setText(time);
+            }else{
+                timeView.setText("尽快安排");
+            }
+
         }
         if (json.has("phone")) {
             phoneView.setText(json.getString("phone"));

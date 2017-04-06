@@ -115,6 +115,12 @@ public class HttpUtils {
         enqueue(callback, request);
     }
 
+    // 发起post请求
+    public void postEnqueueWithServer(Callback callback, String action, String... params) {
+        Request request = getRequest(action, getFormBody(params));
+        enqueue(callback, request);
+    }
+
     // 发起请求
     public void enqueue(Callback callback, Request request) {
         client.newCall(request).enqueue(callback);

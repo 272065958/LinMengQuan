@@ -33,12 +33,9 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'SERVER_API_URI', '"http://www.omengo.com/api/"'
-            buildConfigField 'String', 'SERVER_URI', '"http://image.kamfat.net:8084"'
         }
         debug {
             buildConfigField 'String', 'SERVER_API_URI', '"http://www.omengo.com/api/"'
-            //http://192.168.0.189:8080
-            buildConfigField 'String', 'SERVER_URI', '"http://192.168.0.189:8080"'
         }
     }
 }

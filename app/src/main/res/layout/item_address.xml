@@ -19,7 +19,8 @@
         android:id="@+id/property_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:layout_toRightOf="@id/property_name"
         android:text="1367067519"
         android:textColor="@color/text_deep_color"
         android:textSize="@dimen/text_size_middle" />

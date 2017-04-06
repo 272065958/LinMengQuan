@@ -27,6 +27,9 @@ public class PagerPointView extends View {
     }
 
     public void setPoint(int pointSize, int pointSpace, int selRes, int norRes, int count) {
+        if(count == 1){
+            return;
+        }
         if(paint == null){
             paint = new Paint();
             xOffUnit = pointSize + pointSize;

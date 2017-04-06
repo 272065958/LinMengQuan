@@ -14,25 +14,40 @@
         android:background="@android:color/white"
         android:visibility="gone" />
 
-    <include layout="@layout/view_order_time" />
+    <include
+        android:id="@+id/recycler_line"
+        android:visibility="gone"
+        layout="@layout/item_divider" />
 
-    <LinearLayout
+    <include
+        layout="@layout/view_order_time" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/item_pressed_bg"
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/view_space"
-        android:orientation="horizontal"
         android:padding="@dimen/auto_space">
+
         <TextView
-            android:id="@+id/order_area"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/auto_space"
-            android:layout_weight="1"
+            android:textColor="@color/text_main_color"
+            android:textColorHint="@color/text_second_color"
+            android:text="住房面积："
+            android:textSize="@dimen/text_size_middle" />
+
+        <TextView
+            android:id="@+id/order_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/auto_space"
+            android:layout_alignParentRight="true"
             android:textColor="@color/text_main_color"
             android:textColorHint="@color/text_second_color"
             android:textSize="@dimen/text_size_middle" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

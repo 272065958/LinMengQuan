@@ -16,12 +16,14 @@ import net.kamfat.omengo.server.PayActivity;
  */
 
 public class OrderOperateUtil {
-    private TipDialog cancelDialog;
-    private DialogClickListener listener;
+    private TipDialog cancelDialog, comfirmDialog;
+    private CancelClickListener cancelListener;
+    private ComfirmCliskListener comfirmListener;
 
     public OrderOperateUtil() {
     }
 
+    // 取消订单
     private void cancelOrder(final CancelInterface cancelInterface, BaseActivity activity, String sn) {
         cancelInterface.beforeCancel();
         MyCallbackInterface callbackInterface = new MyCallbackInterface() {
@@ -36,6 +38,23 @@ public class OrderOperateUtil {
             }
         };
         HttpUtils.getInstance().postEnqueue(activity, callbackInterface, "order/cancel", "sn", sn);
+    }
+
+    // 确认收货
+    private void comfirmOrder(final CancelInterface cancelInterface, BaseActivity activity, String sn) {
+        cancelInterface.beforeCancel();
+        MyCallbackInterface callbackInterface = new MyCallbackInterface() {
+            @Override
+            public void success(DatumResponse response) {
+                cancelInterface.cancelSuccess(response.message);
+            }
+
+            @Override
+            public void error() {
+                cancelInterface.cancelFail();
+            }
+        };
+        HttpUtils.getInstance().postEnqueue(activity, callbackInterface, "order/complete", "sn", sn);
     }
 
     public void goToPay(BaseActivity activity, String id, String price) {
@@ -53,24 +72,37 @@ public class OrderOperateUtil {
             cancelDialog = new TipDialog(activity);
             cancelDialog.setText(R.string.tip_title, R.string.cancel_order_tip, R.string.button_sure,
                     R.string.button_cancel);
-            listener = new DialogClickListener(cancelInterface, activity, sn);
-            cancelDialog.setTipComfirmListener(listener);
+            cancelListener = new CancelClickListener(cancelInterface, activity, sn);
+            cancelDialog.setTipComfirmListener(cancelListener);
         } else {
-            listener.setParams(cancelInterface, activity, sn);
+            cancelListener.setParams(cancelInterface, activity, sn);
         }
         cancelDialog.show();
     }
 
-    class DialogClickListener implements TipDialog.ComfirmListener {
+    public void showComfirmDialog(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+        if(comfirmDialog == null){
+            comfirmDialog = new TipDialog(activity);
+            comfirmDialog.setText(R.string.tip_title, R.string.comfirm_order_tip, R.string.button_sure,
+                    R.string.button_cancel);
+            comfirmListener = new ComfirmCliskListener(cancelInterface, activity, sn);
+            comfirmDialog.setTipComfirmListener(comfirmListener);
+        } else {
+            comfirmListener.setParams(cancelInterface, activity, sn);
+        }
+        comfirmDialog.show();
+    }
+
+    private class CancelClickListener implements TipDialog.ComfirmListener {
         CancelInterface cancelInterface;
         BaseActivity activity;
         String sn;
 
-        public DialogClickListener(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+        CancelClickListener(CancelInterface cancelInterface, BaseActivity activity, String sn) {
             setParams(cancelInterface, activity, sn);
         }
 
-        public void setParams(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+        void setParams(CancelInterface cancelInterface, BaseActivity activity, String sn) {
             this.sn = sn;
             this.cancelInterface = cancelInterface;
             this.activity = activity;
@@ -78,12 +110,39 @@ public class OrderOperateUtil {
 
         @Override
         public void comfirm() {
+            cancelDialog.dismiss();
             cancelOrder(cancelInterface, activity, sn);
         }
 
         @Override
         public void cancel() {
             cancelDialog.dismiss();
+        }
+    }
+
+    private class ComfirmCliskListener implements TipDialog.ComfirmListener {
+        CancelInterface comfirmInterface;
+        BaseActivity activity;
+        String sn;
+        ComfirmCliskListener(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+            setParams(cancelInterface, activity, sn);
+        }
+
+        void setParams(CancelInterface cancelInterface, BaseActivity activity, String sn) {
+            this.sn = sn;
+            this.comfirmInterface = cancelInterface;
+            this.activity = activity;
+        }
+
+        @Override
+        public void comfirm() {
+            comfirmDialog.dismiss();
+            comfirmOrder(comfirmInterface, activity, sn);
+        }
+
+        @Override
+        public void cancel() {
+            comfirmDialog.dismiss();
         }
     }
 

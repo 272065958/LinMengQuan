@@ -47,7 +47,7 @@
             android:id="@+id/shop_cart_pay"
             android:layout_width="@dimen/goods_size"
             android:layout_height="match_parent"
-            android:background="@drawable/main_dark_color_btn"
+            android:background="@drawable/main_color_btn"
             android:textColor="@android:color/white"
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/view_space"

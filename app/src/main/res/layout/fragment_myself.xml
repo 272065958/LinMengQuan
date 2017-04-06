@@ -171,7 +171,7 @@
             android:background="@drawable/ic_enter" />
     </RelativeLayout>
 
-    <include layout="@layout/item_divider" />
+    <!--<include layout="@layout/item_divider" />
 
     <RelativeLayout
         android:id="@+id/myself_feedback"
@@ -195,7 +195,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:background="@drawable/ic_enter" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <include layout="@layout/item_divider" />
 
@@ -221,7 +221,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/icon_size"
-            android:text="400-930-3688"
+            android:text="400-930-2220"
             android:textColor="@color/text_second_color" />
 
         <ImageView

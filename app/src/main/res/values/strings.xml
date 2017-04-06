@@ -8,6 +8,7 @@
     <string name="tip_title">提示</string>
     <string name="exit_tip">是否退出当前界面?</string>
     <string name="cancel_order_tip">是否取消当前订单?</string>
+    <string name="comfirm_order_tip">是否已收到商品?</string>
     <string name="select_photo_upload">(已选中%1$d张) 立即上传</string>
     <string name="crop_image">裁剪图片</string>
     <string name="upload_cancel">已取消上传</string>
@@ -52,13 +53,13 @@
 
 
     <!-- 订单 -->
-    <string name="order_price_format">服务费用：%1$s元</string>
-    <string name="order_area_format">你的住房面积：%1$s平方</string>
+    <string name="order_price_format">%1$s元</string>
+    <string name="order_area_format">%1$s平方</string>
     <string name="order_no_coupon">无可用优惠券</string>
     <string name="order_select_coupon">选择优惠券</string>
     <string name="order_count">选择购买数量</string>
     <string name="order_water_hint">如果家里没有对应品牌空桶或需要水泵请一并购买</string>
-    <string name="order_pay_price_format">实际付款：%s</string>
+    <string name="order_pay_price_format">实付款：%s</string>
     <string name="order_shop_count_format">结算商品数量：%d</string>
     <string name="order_shop_price_format">总费用：%s元</string>
     <string name="cart_shop_price_format">总价：￥%s</string>
@@ -116,9 +117,11 @@
     <string name="button_reservation">立即预约</string>
     <string name="button_add_cart">加入购物车</string>
     <string name="button_buy_now">立即购买</string>
+    <string name="button_submit_order">提交订单</string>
     <string name="button_order_cancel">取消订单</string>
     <string name="button_order_pay">立即付款</string>
     <string name="button_order_back">申请退款</string>
+    <string name="button_order_comfirm">确认收货</string>
 
     <!-- 物业余额 -->
     <string name="balance_recharge">充值</string>
@@ -158,7 +161,7 @@
     <string name="order_detail_address">配送地点：</string>
     <string name="server_address">服务地址</string>
     <string name="order_detail_type">配送方式：</string>
-    <string name="order_detail_time">配送时间：</string>
+    <string name="order_detail_time">服务时间：</string>
     <string name="order_detail_pay">支付方式：</string>
     <string name="order_detail_phone">联系电话：</string>
 

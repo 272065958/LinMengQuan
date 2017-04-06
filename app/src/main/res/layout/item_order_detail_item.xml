@@ -42,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="￥30.60"
+            android:layout_toLeftOf="@id/shop_detail_count"
             android:layout_below="@id/shop_detail_title"
             android:textSize="@dimen/text_size_small"
-            android:textColor="@color/notice_color"/>
+            android:textColor="@color/text_second_color"/>
     </RelativeLayout>
 </LinearLayout>

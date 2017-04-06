@@ -1,7 +1,10 @@
 package net.kamfat.omengo.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,14 +17,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.reflect.TypeToken;
+
 import net.kamfat.omengo.OmengoApplication;
 import net.kamfat.omengo.R;
 import net.kamfat.omengo.base.BaseActivity;
+import net.kamfat.omengo.bean.api.Code;
+import net.kamfat.omengo.bean.api.DatumResponse;
+import net.kamfat.omengo.dialog.DownloadDialog;
 import net.kamfat.omengo.fragment.ServerFragment;
 import net.kamfat.omengo.fragment.MyselfFragment;
 import net.kamfat.omengo.fragment.ShopCartFragment;
+import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.property.activity.PropertyBalanceActivity;
 import net.kamfat.omengo.property.activity.PropertyChangeActivity;
+import net.kamfat.omengo.util.JsonParser;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
@@ -42,15 +60,27 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            savedInstanceState.remove("android:support:fragments");
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startActivity(new Intent(this, LauncherActivity.class));
-        initView();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(OmengoApplication.ACTION_LOGIN);
-        filter.addAction(OmengoApplication.ACTION_CART_BUY);
-        filter.addAction(OmengoApplication.ACTION_INFO_UPDATE);
-        registerReceiver(filter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(viewPager == null){
+            checkVersion();
+            initView();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(OmengoApplication.ACTION_LOGIN);
+            filter.addAction(OmengoApplication.ACTION_CART_BUY);
+            filter.addAction(OmengoApplication.ACTION_INFO_UPDATE);
+            filter.addAction(OmengoApplication.ACTION_HEAD_UPDATE);
+            registerReceiver(filter);
+        }
     }
 
     // 收到广播回调
@@ -69,6 +99,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             case OmengoApplication.ACTION_CART_BUY:
                 if(shopcartFragment != null){
                     shopcartFragment.onRefresh();
+                }
+                break;
+            case OmengoApplication.ACTION_HEAD_UPDATE:
+                if(myselfFragment != null){
+                    myselfFragment.setHeader();
                 }
                 break;
         }
@@ -170,7 +205,50 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         myselfFragment.myselfOnClick(this, view);
     }
 
-
+    // 检测新版本
+    private void checkVersion() {
+//        try {
+//            PackageInfo pi = getPackageManager().getPackageInfo(getPackageName(), 0);
+//            HttpUtils.getInstance().postEnqueueWithServer(new Callback() {
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    String body = response.body().string();
+//                    final DatumResponse rb = JsonParser.getInstance().getDatumResponse(body);
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (rb != null && rb.code == Code.SUCCESS) {
+//                                // 删除缓存文件
+//                                Type type = new TypeToken<LinkedTreeMap<String, Object>>() {
+//                                }.getType();
+//                                final LinkedTreeMap<String, Object> map = JsonParser.getInstance().fromJson(rb.datum, type);
+//                                final DownloadDialog dialog = new DownloadDialog(MainActivity.this);
+//                                dialog.setText("发现新版本", map.get("message").toString().replace(";", ";\n"),
+//                                        getString(R.string.button_sure), map.get("url").toString()).show();
+//                                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//                                    @Override
+//                                    public void onCancel(DialogInterface dialogInterface) {
+//                                        dialog.onCancel();
+//                                    }
+//                                });
+//                            }
+//                        }
+//                    });
+//                }
+//            }, "http://oms.kamfat.net/api/version/check", "version", String.valueOf(pi.versionCode), "client", "android");
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+    }
 
     /**
      * 滑动主页到指定位置

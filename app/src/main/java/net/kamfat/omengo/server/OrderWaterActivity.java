@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -17,6 +18,7 @@ import net.kamfat.omengo.bean.api.DatumResponse;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
 import net.kamfat.omengo.util.JsonParser;
+import net.kamfat.omengo.util.Tools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -111,6 +113,8 @@ public class OrderWaterActivity extends GoodBuyActivity {
         findViewById(R.id.product_content).setVisibility(View.VISIBLE);
         findViewById(R.id.bottom_button).setVisibility(View.VISIBLE);
         View v = findViewById(R.id.water_shop);
+        ImageView iconView = (ImageView) v.findViewById(R.id.shop_detail_photo);
+        Tools.setImage(this, iconView, product.image);
         TextView titleView = (TextView) v.findViewById(R.id.shop_detail_title);
         titleView.setText(product.name);
         TextView priceView = (TextView) v.findViewById(R.id.shop_detail_price);
@@ -134,6 +138,8 @@ public class OrderWaterActivity extends GoodBuyActivity {
             findViewById(R.id.water_pump).setVisibility(View.VISIBLE);
             BaseProductBean pb = products.get(0);
             v = findViewById(R.id.water_bucket);
+            iconView = (ImageView) v.findViewById(R.id.shop_detail_photo);
+            Tools.setImage(this, iconView, pb.image);
             titleView = (TextView) v.findViewById(R.id.shop_detail_title);
             titleView.setText(pb.name);
             priceView = (TextView) v.findViewById(R.id.shop_detail_price);
@@ -152,6 +158,8 @@ public class OrderWaterActivity extends GoodBuyActivity {
 
             pb = products.get(1);
             v = findViewById(R.id.water_pump);
+            iconView = (ImageView) v.findViewById(R.id.shop_detail_photo);
+            Tools.setImage(this, iconView, pb.image);
             titleView = (TextView) v.findViewById(R.id.shop_detail_title);
             titleView.setText(pb.name);
             priceView = (TextView) v.findViewById(R.id.shop_detail_price);

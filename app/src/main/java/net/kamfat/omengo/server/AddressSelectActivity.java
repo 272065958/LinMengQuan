@@ -45,7 +45,7 @@ public class AddressSelectActivity extends BaseListActivity implements AdapterVi
         }else{
             initView(this);
         }
-        setListViweDivider(ContextCompat.getDrawable(this, R.color.divider_color),
+        setListViweDivider(ContextCompat.getDrawable(this, R.color.background_bg),
                 getResources().getDimensionPixelOffset(R.dimen.auto_space));
         loadData();
     }

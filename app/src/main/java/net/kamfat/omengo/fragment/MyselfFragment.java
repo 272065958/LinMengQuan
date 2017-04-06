@@ -9,21 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.kamfat.omengo.OmengoApplication;
 import net.kamfat.omengo.R;
 import net.kamfat.omengo.activity.FindPasswordActivity;
 import net.kamfat.omengo.base.BaseFragment;
-import net.kamfat.omengo.activity.FeedbackActivity;
 import net.kamfat.omengo.activity.LoginActivity;
 import net.kamfat.omengo.base.BaseActivity;
 import net.kamfat.omengo.bean.UserBean;
 import net.kamfat.omengo.dialog.TipDialog;
-import net.kamfat.omengo.my.ChangePasswordActivity;
 import net.kamfat.omengo.my.MyCouponActivity;
 import net.kamfat.omengo.my.MyOrderActivity;
 import net.kamfat.omengo.my.UserInfoActivity;
-import net.kamfat.omengo.property.activity.PropertyBalanceActivity;
 import net.kamfat.omengo.util.Tools;
 
 /**
@@ -95,7 +93,7 @@ public class MyselfFragment extends BaseFragment {
             }
             loginView.setClickable(false);
             nameView.setText(currentUser.username);
-            Tools.setHeadImage(getActivity(), headView, currentUser.avatar);
+            setHeader();
         }
     }
 
@@ -107,8 +105,9 @@ public class MyselfFragment extends BaseFragment {
     public void myselfOnClick(BaseActivity activity, View view) {
         switch (view.getId()) {
             case R.id.user_balance: // 余额
-                Intent balanceIntent = new Intent(activity, PropertyBalanceActivity.class);
-                startActivity(balanceIntent);
+//                Intent balanceIntent = new Intent(activity, PropertyBalanceActivity.class);
+//                startActivity(balanceIntent);
+                Toast.makeText(getActivity(), "功能开放中...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.user_order: // 订单
                 Intent orderIntent = new Intent(activity, MyOrderActivity.class);
@@ -127,10 +126,10 @@ public class MyselfFragment extends BaseFragment {
                 pwdIntent.setAction(getString(R.string.myself_change_pwd));
                 startActivity(pwdIntent);
                 break;
-            case R.id.myself_feedback: // 反馈
-                Intent feedbackIntent = new Intent(activity, FeedbackActivity.class);
-                startActivity(feedbackIntent);
-                break;
+//            case R.id.myself_feedback: // 反馈
+//                Intent feedbackIntent = new Intent(activity, FeedbackActivity.class);
+//                startActivity(feedbackIntent);
+//                break;
             case R.id.myself_server://联系客服
                 showCallDialog(activity);
                 break;
@@ -149,14 +148,14 @@ public class MyselfFragment extends BaseFragment {
     private void showCallDialog(BaseActivity activity) {
         if (callDialog == null) {
             callDialog = new TipDialog(activity);
-            callDialog.setText(getString(R.string.property_contact_property), "拨打客服电话400-930-3688",
+            callDialog.setText(getString(R.string.property_contact_property), "拨打客服电话400-930-2220",
                     getString(R.string.button_sure), getString(R.string.button_cancel)).setTipComfirmListener(
                     new TipDialog.ComfirmListener() {
                         @Override
                         public void comfirm() {
                             callDialog.dismiss();
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                            callIntent.setData(Uri.parse("tel:400-930-3688"));
+                            callIntent.setData(Uri.parse("tel:400-930-2220"));
                             startActivity(callIntent);
                         }
 
@@ -167,5 +166,9 @@ public class MyselfFragment extends BaseFragment {
                     });
         }
         callDialog.show();
+    }
+
+    public void setHeader() {
+        Tools.setHeadImage(getActivity(), headView, currentUser.avatar);
     }
 }

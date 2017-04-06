@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#FA615B</color>
-    <color name="colorPrimaryClick">#F4423B</color>
     <color name="colorPrimaryDark">#FF2F36</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimaryYellow">#ffab00</color>
+    <color name="colorPrimaryYellowClick">#ff9803</color>
 
     <color name="background_bg">#eeeeee</color>
     <color name="bottom_tool_bg">#f8f8f8</color>
     <color name="division_line_color">#dfdfdf</color>
     <color name="top_tool_bg">#fdfdfd</color>
 
-    <!-- 文字主色 -->
+    <!-- 失效色 -->
     <color name="text_main_color">#595757</color>
+    <!-- 文字主色 -->
+    <color name="invalid_color">#b0b0b0</color>
     <!-- 文字副色 -->
     <color name="text_second_color">#b3b3b3</color>
     <!-- 文字深色 -->

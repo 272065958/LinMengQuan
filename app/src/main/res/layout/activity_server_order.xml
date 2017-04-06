@@ -36,6 +36,8 @@
                 android:layout_marginBottom="@dimen/auto_space"
                 layout="@layout/property_location_select" />
 
+            <include layout="@layout/item_divider" />
+
             <ViewStub
                 android:id="@+id/order_count_viewstub"
                 android:layout_width="match_parent"
@@ -81,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/auto_space"
-                android:background="@android:color/white"
+                android:textColor="@color/text_second_color"
                 android:text="购买须知："/>
 
             <TextView
@@ -90,7 +92,8 @@
                 android:paddingLeft="@dimen/auto_space"
                 android:paddingRight="@dimen/auto_space"
                 android:paddingBottom="@dimen/auto_space"
-                android:background="@android:color/white"
+                android:textColor="@color/text_second_color"
+                android:textSize="@dimen/text_size_small"
                 android:text="@string/pat_train_tip"/>
         </LinearLayout>
 

@@ -35,7 +35,7 @@ public class TreeAdapter extends MyBaseAdapter {
     @Override
     protected void bindData(int position, MyViewHolder holder) {
         TreeBean tb = (TreeBean) getItem(position);
-        ((ViewHolder) holder).nameView.setText(tb.project_name);
+        ((ViewHolder) holder).nameView.setText(tb.name);
     }
 
     class ViewHolder extends MyViewHolder {

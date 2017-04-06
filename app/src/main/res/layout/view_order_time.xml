@@ -9,15 +9,25 @@
     android:padding="@dimen/auto_space">
 
     <TextView
-        android:id="@+id/order_time"
-        android:layout_width="0dp"
+        android:id="@+id/order_time_tip"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/auto_space"
+        android:textColor="@color/text_main_color"
+        android:textColorHint="@color/text_second_color"
+        android:text="服务时间："
+        android:textSize="@dimen/text_size_middle" />
+
+    <TextView
+        android:id="@+id/order_time"
+        android:layout_width="0dp"
         android:layout_weight="1"
-        android:hint="请选择服务时间"
-        android:textSize="@dimen/text_size_middle"
-        android:textColor="@color/text_deep_color"
-        android:textColorHint="@color/text_second_color" />
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_marginLeft="@dimen/auto_space"
+        android:textColor="@color/text_main_color"
+        android:textColorHint="@color/text_second_color"
+        android:textSize="@dimen/text_size_small" />
 
     <ImageView
         android:layout_width="wrap_content"

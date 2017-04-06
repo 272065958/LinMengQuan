@@ -28,10 +28,10 @@
             android:id="@+id/property_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/property_name"
+            android:layout_marginLeft="@dimen/auto_space"
             android:textSize="@dimen/text_size_middle"
             android:visibility="gone"
-            android:text="1367067519"
             android:textColor="@color/text_deep_color" />
 
         <TextView
@@ -39,9 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/middle_space"
-            android:layout_below="@id/property_phone"
+            android:layout_below="@id/property_name"
             android:text="嘉信城市花园1期2座3E"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:textSize="@dimen/text_size_middle"
             android:textColor="@color/text_deep_color" />
     </RelativeLayout>

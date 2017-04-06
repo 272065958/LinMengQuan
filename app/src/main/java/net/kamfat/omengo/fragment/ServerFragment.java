@@ -1,7 +1,9 @@
 package net.kamfat.omengo.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -27,7 +29,6 @@ import net.kamfat.omengo.http.MyCallbackInterface;
 import net.kamfat.omengo.component.HomeHeaderView;
 import net.kamfat.omengo.server.ServerListActivity;
 import net.kamfat.omengo.server.ShopListActivity;
-import net.kamfat.omengo.server.AllClassActivity;
 import net.kamfat.omengo.server.ServerSelectActivity;
 import net.kamfat.omengo.util.JsonParser;
 
@@ -38,12 +39,13 @@ import java.util.ArrayList;
  * Created by Administrator on 2016/8/20.
  * 首页碎片
  */
-public class ServerFragment extends BaseFragment implements View.OnClickListener, ScrollAdverView.OnSingleTouchListener{
+public class ServerFragment extends BaseFragment implements View.OnClickListener, ScrollAdverView.OnSingleTouchListener {
 
     ListView listView;
     View loadView, emptyView;
     HomeAdapter adapter;
     HomeHeaderView headerView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,11 +55,11 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
             listView = (ListView) view.findViewById(R.id.list_view);
             headerView = new HomeHeaderView(getContext());
             headerView.bind(this, this);
-            headerView.initViewSize(((OmengoApplication)getActivity().getApplication()).getScreen_width());
+            headerView.initViewSize(((OmengoApplication) getActivity().getApplication()).getScreen_width());
             listView.addHeaderView(headerView);
             loadView = view.findViewById(R.id.loading_view);
             emptyView = view.findViewById(R.id.empty_view);
-            loadData();
+            loadCache();
         }
         return view;
     }
@@ -72,9 +74,9 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
         selectListener(m);
     }
 
-    private void selectListener(ServerBean sb){
-        if(sb == null){
-            return ;
+    private void selectListener(ServerBean sb) {
+        if (sb == null) {
+            return;
         }
         Intent intent = null;
         switch (sb.type) {
@@ -88,12 +90,30 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
             case "4": // 全部分类
                 intent = new Intent(getContext(), ServerListActivity.class);
                 break;
+            case "13":
+                intent = new Intent(getContext(), ServerSelectActivity.class);
+                break;
         }
-        if(intent != null){
+        if (intent != null) {
             intent.putExtra("key", sb.key);
             intent.putExtra("type", sb.type);
             intent.setAction(sb.name);
             getContext().startActivity(intent);
+        }
+    }
+
+    private void loadCache() {
+        SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.app_name),
+                Activity.MODE_PRIVATE);
+        if (sp.contains("server_data")) {
+            String data = sp.getString("server_data", null);
+            Type type = new TypeToken<ArrayList<ArrayList<ServerBean>>>() {
+            }.getType();
+            ArrayList<ArrayList<ServerBean>> mainList = JsonParser.getInstance().fromJson(data, type);
+            displayData(mainList);
+            loadData();
+        } else {
+            loadData();
         }
     }
 
@@ -102,9 +122,12 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void success(DatumResponse response) {
                 hideLoadView();
-                Type type = new TypeToken<ArrayList<ArrayList<ServerBean>>>() {
-                }.getType();
-                ArrayList<ArrayList<ServerBean>> mainList = JsonParser.getInstance().fromJson(response.datum, type);
+                ArrayList<ArrayList<ServerBean>> mainList = parserData(response.datum);
+                if(mainList != null && !mainList.isEmpty()){
+                    SharedPreferences sp = getActivity().getSharedPreferences(getString(R.string.app_name),
+                            Activity.MODE_PRIVATE);
+                    sp.edit().putString("server_data", response.datum).apply();
+                }
                 displayData(mainList);
             }
 
@@ -116,6 +139,13 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
         HttpUtils.getInstance().postEnqueue((BaseActivity) getActivity(), callbackInterface, "app/newIndex");
     }
 
+    // 解析首页数据
+    private ArrayList<ArrayList<ServerBean>> parserData(String data){
+        Type type = new TypeToken<ArrayList<ArrayList<ServerBean>>>() {
+        }.getType();
+        return JsonParser.getInstance().fromJson(data, type);
+    }
+
     // 隐藏加载的view
     private void hideLoadView() {
         if (loadView.getVisibility() == View.VISIBLE) {
@@ -124,32 +154,30 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
     }
 
     // 显示数据
-    private void displayData(ArrayList<ArrayList<ServerBean>> mainList){
-        if(adapter == null){
+    private void displayData(ArrayList<ArrayList<ServerBean>> mainList) {
+        ArrayList<ServerBean> adverList;
+        ArrayList<ServerBean> serverList;
+        ArrayList<ServerBean> dataList;
+        if (mainList != null) {
+            adverList = mainList.get(0);
+            serverList = mainList.get(1);
+            dataList = mainList.get(2);
+        } else {
+            adverList = null;
+            serverList = null;
+            dataList = null;
+        }
+        BaseActivity activity = (BaseActivity) getActivity();
+        headerView.setData(activity, adverList, serverList);
+        if (adapter == null) {
             listView.requestFocus();
             listView.setDivider(null);
             listView.setDividerHeight(getResources().getDimensionPixelOffset(R.dimen.auto_space));
             listView.setHeaderDividersEnabled(true);
-
-            ArrayList<ServerBean> adverList;
-            ArrayList<ServerBean> serverList;
-            ArrayList<ServerBean> dataList;
-            if(mainList != null){
-                adverList = mainList.get(0);
-                serverList = mainList.get(1);
-                dataList = mainList.get(2);
-            }else{
-                adverList = null;
-                serverList = null;
-                dataList = null;
-            }
-            BaseActivity activity = (BaseActivity) getActivity();
-            headerView.setData(activity, adverList, serverList);
-
             adapter = new HomeAdapter(dataList, activity, ((OmengoApplication) activity.getApplication()).getScreen_width());
             listView.setAdapter(adapter);
-        }else{
-            adapter.notifyDataSetChanged();
+        } else {
+            adapter.notifyDataSetChanged(dataList);
         }
     }
 
@@ -164,7 +192,7 @@ public class ServerFragment extends BaseFragment implements View.OnClickListener
         @Override
         public View createView(Context context) {
             View view = View.inflate(context, R.layout.item_home, null);
-            AbsListView.LayoutParams alp  = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight);
+            AbsListView.LayoutParams alp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, imageHeight);
             view.setLayoutParams(alp);
             view.setOnClickListener(ServerFragment.this);
             return view;

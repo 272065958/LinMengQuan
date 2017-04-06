@@ -1,6 +1,7 @@
 package net.kamfat.omengo.my;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,8 +16,10 @@ import java.util.ArrayList;
  * Created by cjx on 2016/12/27.
  */
 public class CouponAdapter extends MyBaseAdapter {
-    public CouponAdapter(ArrayList<?> list, BaseActivity context){
+    int position;
+    public CouponAdapter(ArrayList<?> list, BaseActivity context, int position){
         super(list, context);
+        this.position = position;
     }
 
     @Override
@@ -45,6 +48,9 @@ public class CouponAdapter extends MyBaseAdapter {
             priceView = (TextView) v.findViewById(R.id.coupon_price);
             nameView = (TextView) v.findViewById(R.id.coupon_name);
             timeView = (TextView) v.findViewById(R.id.coupon_time);
+            if(position > 0){
+                priceView.setBackgroundColor(ContextCompat.getColor(context, R.color.invalid_color));
+            }
         }
     }
 }

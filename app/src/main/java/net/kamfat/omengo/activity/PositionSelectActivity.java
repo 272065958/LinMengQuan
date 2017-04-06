@@ -42,12 +42,12 @@ public class PositionSelectActivity extends TreeSelectActivity {
         if (tb.isChild()) {
             returnPosition(tb);
         } else {
-            TabLayout.Tab tab = tabLayout.newTab().setText(tb.project_name);
+            TabLayout.Tab tab = tabLayout.newTab().setText(tb.name);
             tabLayout.addTab(tab, true);
             if (completeMenu != null && !completeMenu.isVisible()) {
                 completeMenu.setVisible(true);
             }
-            loadChildTree(tb._id);
+            loadChildTree(tb.id);
         }
     }
 
@@ -69,8 +69,8 @@ public class PositionSelectActivity extends TreeSelectActivity {
     // 选中一个item返回
     private void returnPosition(TreeBean tb) {
         StringBuilder pChild = getNavitionPath();
-        pChild.append(tb.project_name);
-        returnResult(tb._id, pChild.toString());
+        pChild.append(tb.name);
+        returnResult(tb.id, pChild.toString());
     }
 
     // 返回数据

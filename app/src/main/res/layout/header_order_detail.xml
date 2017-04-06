@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/auto_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="4402365121655312"
         android:textColor="@color/text_deep_color" />
 
     <TextView
@@ -32,7 +31,6 @@
         android:layout_marginRight="@dimen/auto_space"
         android:layout_marginTop="@dimen/middle_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="嘉信城市花园1期2座3E"
         android:textColor="@color/text_deep_color" />
 
     <TextView
@@ -43,7 +41,6 @@
         android:layout_marginRight="@dimen/auto_space"
         android:layout_marginTop="@dimen/middle_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="送货上门"
         android:textColor="@color/text_deep_color" />
 
     <TextView
@@ -54,7 +51,6 @@
         android:layout_marginRight="@dimen/auto_space"
         android:layout_marginTop="@dimen/middle_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="下单后1小时内送达"
         android:textColor="@color/text_deep_color" />
 
     <TextView
@@ -65,7 +61,6 @@
         android:layout_marginRight="@dimen/auto_space"
         android:layout_marginTop="@dimen/middle_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="在线支付"
         android:textColor="@color/text_deep_color" />
 
     <TextView
@@ -76,7 +71,6 @@
         android:layout_marginRight="@dimen/auto_space"
         android:layout_marginTop="@dimen/middle_space"
         android:layout_toRightOf="@id/order_detail_num_tip"
-        android:text="13670675194"
         android:textColor="@color/text_deep_color" />
 
     <TextView

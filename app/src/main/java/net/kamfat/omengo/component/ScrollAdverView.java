@@ -113,9 +113,9 @@ public class ScrollAdverView extends RelativeLayout {
             pointView.setVisibility(GONE);
             return;
         }
-        pointView.setVisibility(VISIBLE);
         int length = poster.size();
         if (length > 1) { // 给链表的头部和尾部添加多一条数据,实现无限循环
+            pointView.setVisibility(VISIBLE);
             ServerBean first = poster.get(length - 1);
             ServerBean last = poster.get(0);
             poster.add(last);
@@ -138,6 +138,8 @@ public class ScrollAdverView extends RelativeLayout {
                     views = newViews;
                 }
             }
+        }else{
+            pointView.setVisibility(GONE);
         }
         if (lastView == null) {
             lastView = getView();

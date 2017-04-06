@@ -20,6 +20,7 @@ import net.kamfat.omengo.util.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by Administrator on 2016/8/20.
@@ -63,6 +64,7 @@ public class HomeHeaderView extends LinearLayout {
         lp.height = adverViewHeight;
     }
 
+    MyPagerAdapter pagerAdapter;
     private void initViewPager(View[] views) {
         final View view = views[0];
         int width = View.MeasureSpec.makeMeasureSpec(0,
@@ -72,8 +74,12 @@ public class HomeHeaderView extends LinearLayout {
         view.measure(width, height);
         LinearLayout.LayoutParams lp = (LayoutParams) pagerView.getLayoutParams();
         lp.height = view.getMeasuredHeight(); // 获取高度
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(views);
-        pagerView.setAdapter(pagerAdapter);
+        if(pagerAdapter == null){
+            pagerAdapter = new MyPagerAdapter(views);
+            pagerView.setAdapter(pagerAdapter);
+        }else{
+            pagerAdapter.notifyDataSetChanged(views);
+        }
     }
 
     public void setData(BaseActivity activity, ArrayList<ServerBean> adverList,
@@ -83,6 +89,26 @@ public class HomeHeaderView extends LinearLayout {
         adverView.setOnSingleTouchListener(singleTouchListener);
         // 设置服务
         if (serverList != null) {
+            // 清空现在的view
+            if(pagerAdapter != null){
+                View[] views = pagerAdapter.getViews();
+                if(views != null){
+                    for(View v : views){
+                        LinearLayout viewGroup = (LinearLayout) v;
+                        if(viewGroup.getOrientation() == LinearLayout.VERTICAL){
+                            for(int i=1; i>-1; i--){
+                                LinearLayout child = (LinearLayout) viewGroup.getChildAt(i);
+                                clearLineView(child);
+                                contentStack.add(child);
+                                viewGroup.removeView(child);
+                            }
+                        }else{
+                            clearLineView(viewGroup);
+                        }
+                    }
+                }
+            }
+
             int size = serverList.size();
             int page = (int) Math.ceil(size / 10.0f);
             View[] views = new View[page];
@@ -103,6 +129,8 @@ public class HomeHeaderView extends LinearLayout {
     }
 
     LinearLayout.LayoutParams itemLayoutParams;
+    Stack<LinearLayout> contentStack = new Stack<>();
+    Stack<View> itemStack = new Stack<>();
 
     private View initPageView(List<ServerBean> list) {
         LinearLayout linearLayout;
@@ -142,29 +170,55 @@ public class HomeHeaderView extends LinearLayout {
         return linearLayout;
     }
 
+    // 清除一个item行的容器
+    private void clearLineView(LinearLayout linearLayout){
+        int childCount = linearLayout.getChildCount();
+        for(int i=childCount-1; i>-1; i--){
+            View itemView = linearLayout.getChildAt(i);
+            itemStack.add(itemView);
+            linearLayout.removeView(itemView);
+        }
+    }
+
+    // 添加一个item行的容器
     private LinearLayout getLineView() {
-        LinearLayout linearLayout = new LinearLayout(getContext());
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        return linearLayout;
+        if(contentStack.isEmpty()){
+            LinearLayout linearLayout = new LinearLayout(getContext());
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            return linearLayout;
+        }else{
+            return contentStack.pop();
+        }
     }
 
     // 添加一个item view
     private View getItemView(ServerBean gb) {
-        View v = View.inflate(getContext(), R.layout.item_server, null);
+        View v;
+        if(itemStack.isEmpty()){
+            v = View.inflate(getContext(), R.layout.item_server, null);
+            v.setOnClickListener(listener);
+        }else{
+            v = itemStack.pop();
+        }
         ImageView iconView = (ImageView) v.findViewById(R.id.server_icon);
         TextView nameView = (TextView) v.findViewById(R.id.server_name);
         Tools.setImage((Activity) getContext(), iconView, gb.image);
         nameView.setText(gb.name);
         v.setTag(R.string.main_server, gb);
-        v.setOnClickListener(listener);
         return v;
+
     }
 
     class MyPagerAdapter extends PagerAdapter {
         View[] views;
 
-        public MyPagerAdapter(View[] views) {
+        MyPagerAdapter(View[] views) {
             this.views = views;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
 
         @Override
@@ -190,6 +244,15 @@ public class HomeHeaderView extends LinearLayout {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+
+        View[] getViews(){
+            return views;
+        }
+
+        public void notifyDataSetChanged(View[] views) {
+            this.views = views;
+            notifyDataSetChanged();
         }
     }
 

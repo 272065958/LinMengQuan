@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -24,7 +25,6 @@ import net.kamfat.omengo.bean.CouponBean;
 import net.kamfat.omengo.bean.NormBean;
 import net.kamfat.omengo.bean.ServerProductBean;
 import net.kamfat.omengo.bean.api.DatumResponse;
-import net.kamfat.omengo.component.wheel.WheelLayout;
 import net.kamfat.omengo.dialog.DateSelectDialog;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
@@ -36,6 +36,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by cjx on 2016/12/22.
@@ -67,7 +69,7 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
 
     // 收到广播回调
     @Override
-    protected void onBroadcastReceive(Intent intent){
+    protected void onBroadcastReceive(Intent intent) {
         finish();
     }
 
@@ -82,10 +84,10 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
                     break;
                 case RESULT_COUPON:
                     CouponBean cb = (CouponBean) data.getSerializableExtra("coupon");
-                    if(cb == null){
+                    if (cb == null) {
                         couponView.setText(null);
                         couponView.setTag(null);
-                    }else{
+                    } else {
                         couponView.setText(cb.name);
                         couponView.setTag(cb.id);
                     }
@@ -105,8 +107,8 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
                 initPrice();
                 break;
             case R.id.count_minus: // 减少数据
-                if(c > 1){
-                    c --;
+                if (c > 1) {
+                    c--;
                     count = String.valueOf(c);
                     countView.setText(count);
                     initPrice();
@@ -126,10 +128,11 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
                     if (obj.has("receiver")) {
                         address = parser.fromJson(obj.getString("receiver"), AddressBean.class);
                     }
-                    if(obj.has("coupon")){
-                        couponList = parser.fromJson(obj.getString("coupon"), new TypeToken<ArrayList<CouponBean>>(){}.getType());
-                        if(couponList != null){
-                            for(CouponBean cb : couponList){
+                    if (obj.has("coupon")) {
+                        couponList = parser.fromJson(obj.getString("coupon"), new TypeToken<ArrayList<CouponBean>>() {
+                        }.getType());
+                        if (couponList != null) {
+                            for (CouponBean cb : couponList) {
                                 cb.initPrice();
                             }
                         }
@@ -141,7 +144,7 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
                         findViewById(R.id.bottom_button).setVisibility(View.VISIBLE);
                         findViewById(R.id.order_detail_content).setVisibility(View.VISIBLE);
                     }
-                    if(product != null){
+                    if (product != null) {
                         findViewById(getIntent().getStringExtra("type"));
                     }
                 } catch (JSONException e) {
@@ -209,7 +212,7 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
         ViewStub couponStub = (ViewStub) findViewById(R.id.order_coupon_viewstub);
         v = couponStub.inflate();
         couponView = (TextView) v.findViewById(R.id.coupon_view);
-        if(couponList == null || couponList.isEmpty()){
+        if (couponList == null || couponList.isEmpty()) {
             couponView.setHint(R.string.order_no_coupon);
             v.findViewById(R.id.order_coupon_select).setClickable(false);
         }
@@ -221,7 +224,9 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
         View v = areaStub.inflate();
         areaView = (TextView) v.findViewById(R.id.order_area);
         timeView = (TextView) v.findViewById(R.id.order_time);
+        timeView.setHint("请选择时间");
         if (product.specification_items != null && !product.specification_items.isEmpty()) {
+            findViewById(R.id.recycler_line).setVisibility(View.VISIBLE);
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setVisibility(View.VISIBLE);
             adapter = new PackageAdapter(product.specification_items, this);
@@ -235,15 +240,16 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
         if (areaView != null) {
             count = address.user_area;
             areaView.setText(Html.fromHtml(String.format(getString(R.string.order_area_format),
-                    "<font color='red'>"+count+"</font>")));
+                    "<font color='red'>" + count + "</font>")));
         }
         initPrice();
     }
 
     // 显示服务价格
     DecimalFormat decimalFormat = new DecimalFormat("0");
+
     private void initPrice() {
-        if(priceView != null){
+        if (priceView != null) {
             BigDecimal unitPrice = new BigDecimal(product.price);
             BigDecimal buyCount = new BigDecimal(count);
             String price = decimalFormat.format(buyCount.multiply(unitPrice).intValue());
@@ -260,11 +266,11 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
 
     // 选择时间
     public void timeSelect(View v) {
-        showDateDialog(timeView);
+        showDateDialog();
     }
 
     // 选择优惠券
-    public void couponSelect(View v){
+    public void couponSelect(View v) {
         Intent intent = new Intent(this, CouponSelectActivity.class);
         intent.putExtra("coupon", couponList);
         startActivityForResult(intent, RESULT_COUPON);
@@ -272,25 +278,76 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
 
     DateSelectDialog dateDialog;
 
-    private void showDateDialog(TextView v) {
+    private void showDateDialog() {
         if (dateDialog == null) {
-            dateDialog = new DateSelectDialog(this, WheelLayout.TimeStyle.FUTURE);
+            dateDialog = new DateSelectDialog(this);
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH) + 1;
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int min = c.get(Calendar.MINUTE)+1;
+            int dayCount;
+            switch (month){
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    dayCount = 30;
+                    break;
+                case 2:
+                    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+                        dayCount = 29;
+                    } else {
+                        dayCount = 28;
+                    }
+                    break;
+                default:
+                    dayCount = 31;
+                    break;
+            }
+            if(day == dayCount){
+                day = 1;
+                if(month == 12){
+                    year++;
+                    month = 1;
+                }else{
+                    month ++;
+                }
+            }else{
+                day ++;
+            }
+            dateDialog.setDate(year, month, day, hour, min);
+            dateDialog.bind(new DateSelectDialog.DateSelectListener() {
+                @Override
+                public void select(String date) {
+                    timeView.setText(date);
+                }
+            });
         }
-        dateDialog.bind(v);
-        dateDialog.show();
+        dateDialog.show(DateSelectDialog.DateType.FETURE, new Date(System.currentTimeMillis()+86400000), "期望的服务时间必须是24小时之后");
     }
 
     // 提交订单
     public void submitClick(View v) {
-        if(address == null){
+        if (address == null) {
             showToast(getString(R.string.receive_address_null_hint));
-            return ;
+            return;
         }
-        String time = timeView.getText().toString();
+        String time;
+        if(timeView != null){
+            time = timeView.getText().toString();
+            if(TextUtils.isEmpty(time)){
+                showToast("请选择时间");
+                return;
+            }
+        }else{
+            time = null;
+        }
         String remark = remarkVew.getText().toString();
         String pid = getIntent().getStringExtra("key");
         String nid = adapter == null ? null : adapter.getNormId();
-        String cid = (String) couponView.getTag();
+        String cid = couponView == null ? null : (String) couponView.getTag();
         showLoadDislog();
         MyCallbackInterface callbackInterface = new MyCallbackInterface() {
             @Override
@@ -386,7 +443,7 @@ public class ServerOrderActivity extends BaseActivity implements View.OnClickLis
             initPrice();
         }
 
-        public String getNormId(){
+        public String getNormId() {
             return list.get(currentPosition).parameterid;
         }
 

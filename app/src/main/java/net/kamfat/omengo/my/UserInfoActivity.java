@@ -3,12 +3,15 @@ package net.kamfat.omengo.my;
 import android.content.Intent;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import net.kamfat.omengo.OmengoApplication;
 import net.kamfat.omengo.R;
 import net.kamfat.omengo.activity.CropImageActivity;
 import net.kamfat.omengo.activity.ImageSelectActivity;
@@ -37,6 +40,7 @@ public class UserInfoActivity extends BaseActivity implements ItemSelectDialog.O
 
         setToolBar(true, null, R.string.myself_info);
         headView = (ImageView) findViewById(R.id.user_head);
+        Tools.setHeadImage(this, headView, OmengoApplication.getInstance().user.avatar);
     }
 
     @Override
@@ -119,7 +123,15 @@ public class UserInfoActivity extends BaseActivity implements ItemSelectDialog.O
                     mCurrentPhotoPath = Tools.getTempPath(UserInfoActivity.this) +
                             "IMG_" + System.currentTimeMillis() + ".jpg";
                 }
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(mCurrentPhotoPath)));
+                Uri uri;
+                File file = new File(mCurrentPhotoPath);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                    uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider",
+                            file);
+                }else{
+                    uri = Uri.fromFile(new File(mCurrentPhotoPath));
+                }
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             } else {
                 Toast.makeText(UserInfoActivity.this, "no system camera find", Toast.LENGTH_SHORT).show();
@@ -166,5 +178,7 @@ public class UserInfoActivity extends BaseActivity implements ItemSelectDialog.O
 
     // 上传头像
     private void uploadResult(String string){
+        OmengoApplication.getInstance().user.avatar = string;
+        Tools.setHeadImage(this, headView, string);
     }
 }

@@ -201,7 +201,7 @@ public class ShopListActivity extends BaseActivity {
             if (position == currentSelectPosition) {
                 v.setBackgroundColor(Color.WHITE);
             } else {
-                v.setBackgroundColor(ContextCompat.getColor(context, R.color.item_pressed_color));
+                v.setBackgroundColor(ContextCompat.getColor(context, R.color.background_bg));
             }
             SortBean sb = (SortBean) getItem(position);
             ho.nameView.setText(sb.name);

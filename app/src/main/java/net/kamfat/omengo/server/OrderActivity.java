@@ -21,7 +21,6 @@ import net.kamfat.omengo.bean.AddressBean;
 import net.kamfat.omengo.bean.BaseProductBean;
 import net.kamfat.omengo.bean.CouponBean;
 import net.kamfat.omengo.bean.api.DatumResponse;
-import net.kamfat.omengo.component.wheel.WheelLayout;
 import net.kamfat.omengo.dialog.DateSelectDialog;
 import net.kamfat.omengo.http.HttpUtils;
 import net.kamfat.omengo.http.MyCallbackInterface;
@@ -34,6 +33,8 @@ import org.json.JSONObject;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by cjx on 2016/12/23.
@@ -48,7 +49,7 @@ public class OrderActivity extends BaseActivity {
     CouponBean coupon;
     TextView couponView;
     TextView nameView, addressView, phoneView;
-    TextView priceView, countView, timeView;
+    TextView priceView, timeView;
     EditText remarkVew;
 
     boolean isFromCart = false;
@@ -133,7 +134,6 @@ public class OrderActivity extends BaseActivity {
         listView.addHeaderView(getHeaderView());
         listView.setAdapter(new ShopAdapter(products, this));
         priceView = (TextView) findViewById(R.id.order_price);
-        countView = (TextView) findViewById(R.id.order_count);
     }
 
     // 显示收货地址
@@ -156,6 +156,8 @@ public class OrderActivity extends BaseActivity {
         addressView = (TextView) view.findViewById(R.id.property_location);
         couponView = (TextView) view.findViewById(R.id.coupon_view);
         timeView = (TextView) view.findViewById(R.id.order_time);
+        timeView.setHint("不选择默认尽快配送");
+        ((TextView) view.findViewById(R.id.order_time_tip)).setText("送货时间：");
         remarkVew = (EditText) view.findViewById(R.id.order_remark);
         if (couponList == null || couponList.isEmpty()) {
             couponView.setHint(R.string.order_no_coupon);
@@ -231,7 +233,7 @@ public class OrderActivity extends BaseActivity {
 
     // 选择时间
     public void timeSelect(View v) {
-        showDateDialog(timeView);
+        showDateDialog();
     }
 
     // 选择优惠券
@@ -243,12 +245,60 @@ public class OrderActivity extends BaseActivity {
 
     DateSelectDialog dateDialog;
 
-    private void showDateDialog(TextView v) {
+    private void showDateDialog() {
         if (dateDialog == null) {
-            dateDialog = new DateSelectDialog(this, WheelLayout.TimeStyle.FUTURE);
+            dateDialog = new DateSelectDialog(this);
+            Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH) + 1;
+            int day = c.get(Calendar.DAY_OF_MONTH);
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int min = c.get(Calendar.MINUTE)+1;
+            if(hour == 24){ // +1天
+                hour = 0;
+                int dayCount;
+                switch (month){
+                    case 4:
+                    case 6:
+                    case 9:
+                    case 11:
+                        dayCount = 30;
+                        break;
+                    case 2:
+                        if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+                            dayCount = 29;
+                        } else {
+                            dayCount = 28;
+                        }
+                        break;
+                    default:
+                        dayCount = 31;
+                        break;
+                }
+                if(day == dayCount){
+                    day = 1;
+                    if(month == 12){
+                        year++;
+                        month = 1;
+                    }else{
+                        month ++;
+                    }
+                }else{
+                    day ++;
+                }
+            }else{
+                hour ++;
+            }
+
+            dateDialog.setDate(year, month, day, hour, min);
+            dateDialog.bind(new DateSelectDialog.DateSelectListener() {
+                @Override
+                public void select(String date) {
+                    timeView.setText(date);
+                }
+            });
         }
-        dateDialog.bind(v);
-        dateDialog.show();
+        dateDialog.show(DateSelectDialog.DateType.FETURE, new Date(System.currentTimeMillis()+3600000), "期望的送货时间必须是1小时之后");
     }
 
     // 显示价格
@@ -273,7 +323,6 @@ public class OrderActivity extends BaseActivity {
             }
             priceView.setText(Html.fromHtml(String.format(getString(R.string.order_pay_price_format),
                     "<font color='red'>" + "￥" + decimalFormat.format(price) + "</font>")));
-            countView.setText(String.format(getString(R.string.order_count_format), count));
         }
     }
 

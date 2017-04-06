@@ -108,10 +108,12 @@ public class MyOrderActivity extends BaseTabActivity {
             int status = getOrderStatus(ob);
             switch (status) {
                 case 0:// 已完成
+                    ho.statusView.setText(R.string.order_finish);
                     ho.button2View.setVisibility(View.GONE);
                     ho.button1View.setVisibility(View.GONE);
                     break;
                 case 1:// 待付款
+                    ho.statusView.setText(R.string.order_pay);
                     ho.button2View.setVisibility(View.VISIBLE);
                     ho.button1View.setVisibility(View.VISIBLE);
                     ho.button2View.setText(R.string.button_order_cancel);
@@ -122,11 +124,12 @@ public class MyOrderActivity extends BaseTabActivity {
                     ho.button2View.setTag(R.id.order_detail_num, ob);
                     ho.button2View.setTag(R.string.button_order_cancel);
                     break;
-                case 2:// 待服务
+                case 2:// 确认收货
+                    ho.statusView.setText(R.string.order_server);
                     ho.button2View.setVisibility(View.GONE);
                     ho.button1View.setVisibility(View.VISIBLE);
-                    ho.button1View.setText(R.string.button_order_back);
-                    ho.button1View.setTag(R.string.button_order_back);
+                    ho.button1View.setText(R.string.button_order_comfirm);
+                    ho.button1View.setTag(R.string.button_order_comfirm);
                     ho.button1View.setTag(R.id.order_detail_num, ob);
                     break;
             }
@@ -138,7 +141,7 @@ public class MyOrderActivity extends BaseTabActivity {
         }
 
         class ViewHolder extends MyViewHolder implements View.OnClickListener {
-            TextView timeView, titleView, countView, priceView, payView, button1View, button2View;
+            TextView timeView, titleView, countView, priceView, payView, button1View, button2View, statusView;
             ImageView iconView;
             View detailView;
             RecyclerView recyclerView;
@@ -153,6 +156,7 @@ public class MyOrderActivity extends BaseTabActivity {
                 countView = (TextView) v.findViewById(R.id.shop_detail_count);
                 priceView = (TextView) v.findViewById(R.id.shop_detail_price);
                 payView = (TextView) v.findViewById(R.id.order_pay);
+                statusView = (TextView) v.findViewById(R.id.order_status);
                 button1View = (TextView) v.findViewById(R.id.order_button_1);
                 button1View.setOnClickListener(this);
                 button2View = (TextView) v.findViewById(R.id.order_button_2);
@@ -164,6 +168,7 @@ public class MyOrderActivity extends BaseTabActivity {
                 LinearLayoutManager manager = new LinearLayoutManager(context);
                 manager.setOrientation(LinearLayoutManager.HORIZONTAL);
                 recyclerView.setLayoutManager(manager);
+
             }
 
             @Override
@@ -182,7 +187,28 @@ public class MyOrderActivity extends BaseTabActivity {
                     }
                     OrderBean ob = (OrderBean) v.getTag(R.id.order_detail_num);
                     switch ((int) v.getTag()) {
-                        case R.string.button_order_back: // 申请退款
+                        case R.string.button_order_comfirm: // 确认收货
+                            if(cancelInterface == null){
+                                cancelInterface = new OrderOperateUtil.CancelInterface() {
+                                    @Override
+                                    public void beforeCancel() {
+                                        showLoadDislog();
+                                    }
+
+                                    @Override
+                                    public void cancelSuccess(String message) {
+                                        showToast(message);
+                                        dismissLoadDialog();
+                                        refresh();
+                                    }
+
+                                    @Override
+                                    public void cancelFail() {
+                                        dismissLoadDialog();
+                                    }
+                                };
+                            }
+                            util.showComfirmDialog(cancelInterface, MyOrderActivity.this, ob.sn);
                             break;
                         case R.string.button_order_cancel: // 取消订单
                             if(cancelInterface == null){
